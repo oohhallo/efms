@@ -1,0 +1,28 @@
+{% extends 'complaint/base.html' %}
+
+{% block content %}
+<br><br><br>
+
+<div class="table">
+<table class="complaint">
+  <tr>
+    <th onclick="sorttable(0)">Complaint no.</th>
+    <th onclick="sorttable(1)">Info</th>
+    <th onclick="sorttable(2)">Type</th>
+    <th onclick="sorttable(3)">Reg.date</th>
+    <th onclick="sorttable(4)">Status</th>
+    <th onclick="sorttable(5)">Action</th>
+  </tr>
+
+  {% for complaint in complaints %}
+  <tr>
+    <td>{{ complaint.id }}</td>
+    <td>{{ complaint.title }}</td>
+    <td>{{ complaint.category }}</td>
+    <td>{{ complaint.created_date }}</td>
+    <td>{{ complaint.status }}</td>
+    <td>View Details</td>
+  </tr>
+  {% endfor %}
+  
+  {% endblock %}
