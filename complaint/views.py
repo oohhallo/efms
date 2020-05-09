@@ -19,16 +19,11 @@ def login_view(request):
     if(request.method == 'POST'):
         username = request.POST.get("username")
         password = request.POST.get("password")
-        is_admin = request.POST.get("is_admin")
         user = authenticate(username=username, password=password)
         if user:
-            if is_admin=='on':
-                if user.profile.is_admin:
-                    login(request,user)
-                    return HttpResponseRedirect(reverse('admin_complaints_view'))
-                return
             login(request,user)
-            if user.profile.is_admin:
-                return HttpResponseRedirect(reverse('admin_complaints_view'))
+            return HttpResponseRedirect(reverse('admin_complaints_view'))
 
+        else:
+            return render(request, 'complaint/login.html', {'fail': True})
     return render(request, 'complaint/login.html')
