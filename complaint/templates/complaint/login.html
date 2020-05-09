@@ -16,9 +16,7 @@
 					<p>Password</p>
 					<input type="password" name="password" placeholder="password">
                     <p></p>
-                    <!--<input type="checkbox" id="is_admin" name="is_admin">
-					<label for="is_admin">admin</label>-->
-					{% if fail %}
+					{% if login_fail %}
 						<p>Invalid username / password</p>
 					{% endif %}
 					<a href="#">Forgot password</a>
