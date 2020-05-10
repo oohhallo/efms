@@ -6,12 +6,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-<<<<<<< HEAD
 from django.contrib.auth.forms import UserCreationForm
 from .decorators import unauthenticated_user, admin_only
-=======
 from .forms import RegisterComplaintForm
->>>>>>> Add rregister complaint feature
 
 
 @login_required
