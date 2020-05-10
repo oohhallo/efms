@@ -14,14 +14,15 @@ from django.contrib.auth.models import User
 def admin_view_complaints(request):
     complaints = Complaint.objects.filter(created_date__lte=timezone.now()).order_by('created_date')
     return render(request, 'complaint/complaints_table.html',
-                  context={'complaints': complaints})
+                  context={'complaints': complaints, 'home_header': 'active',
+                            'is_admin': True}) 
 
 @login_required
 def user_view_complaints(request):
     log_in_user = User.objects.filter(username=request.user.username).first()
     complaints = Complaint.objects.filter(author=log_in_user).order_by('created_date')
     return render(request, 'complaint/complaints_table.html',
-                  context={'complaints': complaints})
+                  context={'complaints': complaints, 'home_header': 'active'})
     
 
 def login_view(request):

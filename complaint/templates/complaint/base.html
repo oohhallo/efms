@@ -13,10 +13,9 @@
 
     <div class="navbar">
       <a href="#"><i class="fa fa-fw fa-user"></i> Logout</a>
-      <a href="#"><i class="fa fa-gear"></i> Change Password</a>
-      <a href="#"><i class="fa fa-fw fa-envelope"></i> Register</a>
-      <a href="#"><i class="fa fa-fw fa-search"></i> View</a>
-      <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a>
+      <a href="#" class="{{ password_header }}"><i class="fa fa-gear"></i> Change Password</a>
+      <a href="#" class="{{ register_header }}"><i class="fa fa-fw fa-envelope"></i> Register</a>
+      <a href="#" class="{{ home_header }}"><i class="fa fa-fw fa-home"></i> Home</a>
     </div>
 
     {% block content %}
