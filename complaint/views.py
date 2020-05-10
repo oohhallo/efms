@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Complaint
 from django.utils import timezone
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -28,12 +28,17 @@ def login_view(request):
     if(request.method == 'POST'):
         username = request.POST.get("username")
         password = request.POST.get("password")
+        is_admin = request.POST.get("is_admin")
         user = authenticate(username=username, password=password)
         if user:
             login(request,user)
-            if request.user.is_superuser:
-                
-                return HttpResponseRedirect(reverse('admin_complaints_view'))
+            if is_admin=='on':
+                if request.user.profile.is_admin:
+
+                    return HttpResponseRedirect(reverse('admin_complaints_view'))
+                else:
+                    logout(request)
+                    return render(request, 'complaint/login.html', {'not_admin': True}) 
             
             else:
                 return HttpResponseRedirect(reverse('user_complaints_view'))
