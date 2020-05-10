@@ -25,7 +25,7 @@
     <td>{{ complaint.category }}</td>
     <td>{{ complaint.created_date }}</td>
     <td>{{ complaint.status }}</td>
-    <td>View Details</td>
+    <td><a href="{% url 'view_complaints' %}?id={{ complaint.id}}" </a>View Details</td>
   </tr>
   {% endfor %}
 {% endif %}

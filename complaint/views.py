@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .decorators import unauthenticated_user, admin_only
+from .decorators import unauthenticated_user, admin_only,allow_user
 
 
 @login_required
@@ -30,6 +30,13 @@ def user_view_complaints(request):
 def logging_out_view(request):
     logout(request)
     return render(request, 'complaint/logout.html')
+
+@login_required
+@allow_user
+def view_complaint_byid(request):
+    id_complaint=request.GET['id']
+    complaints = Complaint.objects.filter(id=id_complaint)
+    return render(request, 'complaint/view_complaint.html', {'complaints':complaints})
     
 @unauthenticated_user
 def login_view(request):
@@ -66,4 +73,3 @@ def sign_up_view(request):
         return HttpResponseRedirect(reverse('user_complaints_view'))
 
     return render(request, 'complaint/sign_up.html', {'form': form})
-    

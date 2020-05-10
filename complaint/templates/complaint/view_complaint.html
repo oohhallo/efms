@@ -1,0 +1,47 @@
+{% extends 'complaint/base.html' %}
+
+{% block content %}
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>VIEW COMPLAINT</title>
+	<link rel="stylesheet" href=".css">
+</head>
+<body>
+<div class="title"><u><b><b>DETAILS</b></b></u></div>
+<div class="container">
+<div class="formbox">
+    {% for complaint in complaints %}
+	<form>
+		<label for="title"><b>Title of complaint:</label>
+		<input type="text" name="" value= {{complaint.title }} readonly><br></br>
+		<label for="type">Related to:</label>
+		<input type="text" name="" value={{complaint.category }} readonly><br></br>
+		<label for="subject">Complaint Subject:</label>
+		<input type="text" name="" readonly><br></br>
+		
+		<label for="description"> Description:</label><br></br>
+		<textarea id="ta" cols="50" rows="6" placeholder="describe.." >{{complaint.text }}</textarea>
+	<br></br>
+		
+	
+		<label for="datetime">Date of Submit:</label>
+		<textarea id="ta" cols="20" rows=1 readonly>{{complaint.created_date }}</textarea><br></br>
+		
+		<label for="stat">Status:</label>
+		<input type="text" name="" value={{complaint.status}}><br></br>
+		
+		<label for="remarks">Remarks:</label><br></br>
+		<textarea id="ta" cols="50" rows="6" placeholder="describe.."></textarea>
+	
+	<br><br><br>
+    </form>
+    {% endfor %}
+
+</div>
+
+</div>
+</body>
+</html>
+{% endblock %}
