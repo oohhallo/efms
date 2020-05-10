@@ -1,0 +1,36 @@
+{% extends 'complaint/base.html' %}
+
+{% block content %}
+
+<div class="title"><b>REGISTER COMPLAINT</b></div>
+
+<div class ="container">
+<div class="left"></div>
+<div class="right">
+<div class="formbox">
+{% if form_saved %}
+<p>complaint registered! File another complaint below.</p>
+{% endif %}
+<form method="post" action="{% url 'register_complaint' %}">
+    {% csrf_token %}
+    <label for="typ"><b><b>Type of complaint:</label>
+  <select id="comp" name="category">
+    <option value="academic">Academics</option>
+    <option value="mess">Mess</option>
+    <option value="sports">Sports</option>
+    <option value="student_affairs">Student affairs</option>
+    <option value="hostel">Hostel</option>
+    <option value="security">Security</option>
+    <option value="guest_house">Guest House</option>
+    <option value="library">Library</option>
+    <option value="other">Other</option>
+  </select>
+<br></br>
+<label for="des">Description :</label><br></br>
+<input type="text" name="title" placeholder="enter subject" required><br><br>
+<textarea id="ta" cols="50" rows="6" placeholder="describe.." name="description"></textarea>
+<br></br>
+{% if invalid_form %}<p>Invalid form. Try again!</p>{% endif %}
+<button type="submit" name="" value= "submit">Submit</button>
+</div>
+{% endblock %}

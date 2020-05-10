@@ -2,12 +2,16 @@ from django.shortcuts import render
 from .models import Complaint
 from django.utils import timezone
 from django.contrib.auth import authenticate, login,logout
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+<<<<<<< HEAD
 from django.contrib.auth.forms import UserCreationForm
 from .decorators import unauthenticated_user, admin_only
+=======
+from .forms import RegisterComplaintForm
+>>>>>>> Add rregister complaint feature
 
 
 @login_required
@@ -69,3 +73,20 @@ def sign_up_view(request):
 
     return render(request, 'complaint/sign_up.html', {'form': form})
     
+@login_required
+def register_complaint_page(request):
+    if(request.method == 'POST'):
+        print(request)
+        form = RegisterComplaintForm(request.POST)
+        if form.is_valid():
+            complaint = form.save(commit=False)
+            complaint.author = request.user
+            complaint.save()
+            return render(request, 'complaint/register_complaint.html',
+                   context={"form_saved": True,
+                             "register_header": 'active'})
+        return render(request, 'complaint/register_complaint.html',
+                      context={"invalid_form": True,
+                               "register_header": 'active'})
+    return render(request, 'complaint/register_complaint.html',
+                  context={"register_header": 'active'})
