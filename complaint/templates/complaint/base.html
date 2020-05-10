@@ -15,12 +15,12 @@
       <a href="{% url 'logout' %}"><i class="fa fa-fw fa-user"></i> Logout</a>
       <a href="#"><i class="fa fa-gear"></i> Change Password</a>
       <a href="#"><i class="fa fa-fw fa-envelope"></i> Register</a>
-      {% if isit_user %}
+      {% if is_user %}
         <a class="active" href="{% url 'user_complaints_view' %}"><i class="fa fa-fw fa-home"></i> Home</a>
         <p>Welcome {{ user_name }}!!</p>
       {% endif %}
       
-      {% if isit_admin %}
+      {% if is_admin %}
       <a class="active" href="{% url 'admin_complaints_view' %}"><i class="fa fa-fw fa-home"></i> Home</a>
       <p>Welcome Admin!!</p>
       {% endif %}
