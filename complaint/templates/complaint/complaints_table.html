@@ -6,11 +6,18 @@
 {% if no_of_complaints == 0 %}
   <p>Uh-oh! There are no complaints!you can register your complaint here!</p>
   <a href=#>Register Here</a>
-{% else %}
+{% else %
+<div><h3>
+  {% if is_admin %}
+  Complaints
+  {% else %}
+  Your Complaints
+  {% endif %}
+</h3></div>
 <div class="table">
 <table class="complaint">
   <tr>
-    <th onclick="sorttable(0)">Complaint no.</th>
+    <th onclick="sorttable(0)">ID</th>
     <th onclick="sorttable(1)">Info</th>
     <th onclick="sorttable(2)">Type</th>
     <th onclick="sorttable(3)">Reg.date</th>
