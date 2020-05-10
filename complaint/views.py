@@ -31,16 +31,16 @@ def login_view(request):
         is_admin = request.POST.get("is_admin")
         user = authenticate(username=username, password=password)
         if user:
-            login(request,user)
+            
             if is_admin=='on':
-                if request.user.profile.is_admin:
-
+                if user.profile.is_admin:
+                    login(request,user)
                     return HttpResponseRedirect(reverse('admin_complaints_view'))
                 else:
-                    logout(request)
                     return render(request, 'complaint/login.html', {'not_admin': True}) 
             
             else:
+                login(request,user)
                 return HttpResponseRedirect(reverse('user_complaints_view'))
 
         else:
