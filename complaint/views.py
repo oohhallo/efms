@@ -16,7 +16,7 @@ def admin_view_complaints(request):
     complaints = Complaint.objects.filter(created_date__lte=timezone.now()).order_by('created_date')
     no_of_complaints=len(complaints)
     return render(request, 'complaint/complaints_table.html',
-                  context={'complaints': complaints , 'is_admin': True, 'no_of_complaints':no_of_complaints})
+                  context={'complaints': complaints , 'is_admin': True, 'no_of_complaints':no_of_complaints, 'home_header':'active'})
 
 @login_required
 def user_view_complaints(request):
@@ -24,7 +24,9 @@ def user_view_complaints(request):
     complaints = Complaint.objects.filter(author=log_in_user).order_by('created_date')
     no_of_complaints=len(complaints)
     return render(request, 'complaint/complaints_table.html',
-                  context={'complaints': complaints, 'is_user': True, 'user_name':log_in_user, 'no_of_complaints':no_of_complaints})
+                  context={'complaints': complaints, 'is_user': True, 'user_name':log_in_user, 'no_of_complaints':no_of_complaints,
+                 'home_header':'active'})
+
 
 @login_required
 def logging_out_view(request):

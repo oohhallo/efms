@@ -12,11 +12,12 @@
 <body>
 
     <div class="navbar">
+
       <a href="{% url 'logout' %}"><i class="fa fa-fw fa-user"></i> Logout</a>
-      <a href="#"><i class="fa fa-gear"></i> Change Password</a>
-      <a href="#"><i class="fa fa-fw fa-envelope"></i> Register</a>
+      <a href="#" class="{{ password_header }}"><i class="fa fa-gear"></i> Change Password</a>
+      <a href="#" class="{{ register_header }}"><i class="fa fa-fw fa-envelope"></i> Register</a>
       {% if is_user %}
-        <a class="active" href="{% url 'user_complaints_view' %}"><i class="fa fa-fw fa-home"></i> Home</a>
+        <a href="{% url 'user_complaints_view' %}" class="{{ home_header }}"><i class="fa fa-fw fa-home"></i> Home</a>
         <p>Welcome {{ user_name }}!!</p>
       {% endif %}
       
@@ -24,6 +25,7 @@
       <a class="active" href="{% url 'admin_complaints_view' %}"><i class="fa fa-fw fa-home"></i> Home</a>
       <p>Welcome Admin!!</p>
       {% endif %}
+
     </div>
 
     {% block content %}
