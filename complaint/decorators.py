@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Complaint
 
 def unauthenticated_user(view_func):
     def wrapper_func(request, *args, **kwargs):
@@ -21,3 +21,14 @@ def admin_only(view_func):
         else:
             return redirect('user_complaints_view')
     return wrapper_function
+
+def allow_user(view_func):
+    def wrapper_fun(request,*args,**kwargs):
+        id_comp=request.GET['id']
+        log_in_user = User.objects.filter(username=request.user.username).first()
+        complaints = Complaint.objects.filter(id=id_comp).first()
+        if log_in_user.id==complaints.author.id:
+            return view_func(request,*args,**kwargs)
+        else:
+            return redirect('login')
+    return wrapper_fun
