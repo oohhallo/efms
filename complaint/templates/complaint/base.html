@@ -17,7 +17,7 @@
       <a href="{% url 'change-password' %}" class="{{ password_header }}"><i class="fa fa-gear"></i> Change Password</a>
       <a href="{% url 'register_complaint' %}" class="{{ register_header }}"><i class="fa fa-fw fa-envelope"></i> Register</a>
 
-      {% if request.user.is_admin %}
+      {% if request.user.profile.is_admin %}
       <a class="active" href="{% url 'admin_complaints_view' %}"><i class="fa fa-fw fa-home"></i> Home</a>
       <p>Welcome Admin!!</p>
       {% else %}

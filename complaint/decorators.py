@@ -27,7 +27,7 @@ def allow_user(view_func):
         id_comp=request.GET['id']
         log_in_user = User.objects.filter(username=request.user.username).first()
         complaints = Complaint.objects.filter(id=id_comp).first()
-        if log_in_user.id==complaints.author.id:
+        if log_in_user.id==complaints.author.id or log_in_user.profile.is_admin:
             return view_func(request,*args,**kwargs)
         else:
             return redirect('login')
