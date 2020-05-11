@@ -8,7 +8,7 @@ from django.dispatch import receiver
 class Complaint(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=400)
-    text = models.TextField()
+    description = models.TextField()
     id = models.AutoField(primary_key=True)
     STATUS_CHOICES = [
         ('reported', 'Reported'),

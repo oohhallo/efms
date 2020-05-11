@@ -3,10 +3,10 @@
 {% block content %}
 <br><br><br>
 
-{% if no_of_complaints == 0 %}
+{% if zero_complaints %}
   <p>Uh-oh! There are no complaints!you can register your complaint here!</p>
   <a href=#>Register Here</a>
-{% else %
+{% else %}
 <div><h3>
   {% if is_admin %}
   Complaints
