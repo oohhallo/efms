@@ -40,12 +40,19 @@ def logging_out_view(request):
 @login_required(login_url='login')
 @allow_user
 def view_complaint_byid(request, id):
-    print(id)
-    id_complaint= id #request.GET['id']
-    complaint = Complaint.objects.filter(id=id_complaint)[0]
+    complaint = Complaint.objects.filter(id=id)[0]
+    if request.method == "POST":
+        status = request.POST.get('status')
+        remark = request.POST.get('remark')
+        complaint.status = status
+        complaint.save()
+        Remark.objects.create(text=remark, complaint=complaint,
+                               author=request.user)
+
     remarks = Remark.objects.filter(complaint=complaint)
     return render(request, 'complaint/view_complaint.html',
-                  {'complaint': complaint, "remarks": remarks})
+                  {'complaint': complaint, "remarks": remarks,
+                   'status_choices': Complaint.STATUS_CHOICES})
     
 @unauthenticated_user
 def login_view(request):
@@ -115,7 +122,6 @@ def sign_up_view(request):
 @login_required(login_url='login')
 def register_complaint_page(request):
     if(request.method == 'POST'):
-        print(request)
         form = RegisterComplaintForm(request.POST)
         if form.is_valid():
             complaint = form.save(commit=False)
