@@ -101,7 +101,7 @@ def change_password_view(request):
                         "old_pass_wrong": True,
                     })
         else:
-            return render(request, 'complaint/change_password.html', context={
+            return redirect(request, 'complaint/change_password.html', context={
                         "pass_mismatch": True,
                     })
 
