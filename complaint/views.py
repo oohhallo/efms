@@ -41,8 +41,8 @@ def logging_out_view(request):
 @allow_user
 def view_complaint_byid(request):
     id_complaint=request.GET['id']
-    complaints = Complaint.objects.filter(id=id_complaint)
-    return render(request, 'complaint/view_complaint.html', {'complaints':complaints})
+    complaint = Complaint.objects.filter(id=id_complaint)[0]
+    return render(request, 'complaint/view_complaint.html', {'complaint':complaint})
     
 @unauthenticated_user
 def login_view(request):
