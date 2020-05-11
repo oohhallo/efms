@@ -72,27 +72,43 @@ def login_view(request):
 @login_required(login_url='login')
 def change_password_view(request):
     if(request.method =='POST'):
-        new_password=request.POST.get("new_password")
-        request.user.set_password(new_password)
-        print(request.user.username)
-        request.user.save()
-        user = authenticate(username= request.user.username, password = new_password)
-        if user:
-            login(request, user)
-            return HttpResponseRedirect(reverse('login'))
+        old_password = request.POST.get("old_pass")
+        new_password1 = request.POST.get("new_pass1")
+        new_password2 = request.POST.get("new_pass2")
+        if new_password1==new_password2:
+            user =authenticate(username= request.user.username, password = old_password)
+            if user:
+                request.user.set_password(new_password1)
+                request.user.save()
+                user = authenticate(username= request.user.username, password = new_password1)
+                if user:
+                    login(request, user)
+                    return render(request, 'complaint/change_password.html', context={
+                        "pass_changed": True,
+                    })
+            else:
+                return render(request, 'complaint/change_password.html', context={
+                        "old_pass_wrong": True,
+                    })
+        else:
+            return render(request, 'complaint/change_password.html', context={
+                        "pass_mismatch": True,
+                    })
+
+        
 
     return render(request, 'complaint/change_password.html')
 
 
 
-
+@unauthenticated_user
 def sign_up_view(request):
     form=UserCreationForm(request.POST)
-
-    if form.is_valid():
-        user=form.save()
-        login(request,user)
-        return HttpResponseRedirect(reverse('user_complaints_view'))
+    if request.method=='POST':
+        if form.is_valid():
+            user=form.save()
+            login(request,user)
+            return HttpResponseRedirect(reverse('user_complaints_view'))
 
     return render(request, 'complaint/sign_up.html', {'form': form})
 
