@@ -50,6 +50,12 @@ class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     is_admin = models.BooleanField(default=False)
 
+class Remark(models.Model):
+    text = models.TextField()
+    date = models.DateField(default=timezone.now)
+    complaint = models.ForeignKey(Complaint, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

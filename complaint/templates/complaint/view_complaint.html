@@ -19,10 +19,11 @@
 		
 		<label for="stat">Status:</label>
 		<input type="text" name="" value={{complaint.status}}><br></br>
-		{% if complaint.remarks %}
+		{% for remark in remarks %}
 		<label for="remarks">Remarks:</label><br></br>
-		<textarea id="ta" cols="50" rows="6" placeholder="describe.."></textarea>
-		{% endif %}
+		<textarea id="ta" cols="50" rows="6" >{{ remark.text }}</textarea>
+		<p>date: {{ remark.date }}</p>
+		{% endfor %}
 	<br><br><br>
     </form>
 </div>

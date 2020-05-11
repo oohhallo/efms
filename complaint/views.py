@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Complaint
+from .models import Complaint, Remark
 from django.utils import timezone
 from django.contrib.auth import authenticate, login,logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -42,7 +42,9 @@ def logging_out_view(request):
 def view_complaint_byid(request):
     id_complaint=request.GET['id']
     complaint = Complaint.objects.filter(id=id_complaint)[0]
-    return render(request, 'complaint/view_complaint.html', {'complaint':complaint})
+    remarks = Remark.objects.filter(complaint=complaint)
+    return render(request, 'complaint/view_complaint.html',
+                  {'complaint': complaint, "remarks": remarks})
     
 @unauthenticated_user
 def login_view(request):
