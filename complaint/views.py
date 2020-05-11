@@ -110,12 +110,13 @@ def change_password_view(request):
 
 @unauthenticated_user
 def sign_up_view(request):
-    form=UserCreationForm(request.POST)
+    form = UserCreationForm(request.POST)
     if request.method=='POST':
         if form.is_valid():
             user=form.save()
             login(request,user)
             return HttpResponseRedirect(reverse('user_complaints_view'))
+        return HttpResponse("Invalid sign up")
 
     return render(request, 'complaint/sign_up.html', {'form': form})
 

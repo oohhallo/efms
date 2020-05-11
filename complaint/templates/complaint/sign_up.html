@@ -11,7 +11,11 @@
 			<div class="formbox">
 				<form method="POST" action="{% url 'signup' %}">
                     {% csrf_token %}
-					{{form.as_p}}
+					{% for field in form %}
+					{{field.label}}
+					{{field}}
+					<br>
+					{% endfor %}
 					<input type="submit" name="" value= "log in">
 				</form>
 			</div>
