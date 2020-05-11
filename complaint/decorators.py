@@ -24,11 +24,14 @@ def admin_only(view_func):
 
 def allow_user(view_func):
     def wrapper_fun(request,*args,**kwargs):
-        id_comp=request.GET['id']
+        id_comp=kwargs.get('id')
+        user = request.user
+        if not user:
+            return redirect('login')
         log_in_user = User.objects.filter(username=request.user.username).first()
         complaints = Complaint.objects.filter(id=id_comp).first()
-        if log_in_user.id==complaints.author.id:
+        if log_in_user.id==complaints.author.id or user.profile.is_admin:
             return view_func(request,*args,**kwargs)
         else:
-            return redirect('login')
+            return HttpResponse("Access denied")
     return wrapper_fun

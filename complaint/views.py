@@ -39,8 +39,9 @@ def logging_out_view(request):
 
 @login_required(login_url='login')
 @allow_user
-def view_complaint_byid(request):
-    id_complaint=request.GET['id']
+def view_complaint_byid(request, id):
+    print(id)
+    id_complaint= id #request.GET['id']
     complaint = Complaint.objects.filter(id=id_complaint)[0]
     remarks = Remark.objects.filter(complaint=complaint)
     return render(request, 'complaint/view_complaint.html',
@@ -97,10 +98,7 @@ def change_password_view(request):
                         "pass_mismatch": True,
                     })
 
-        
-
     return render(request, 'complaint/change_password.html')
-
 
 
 @unauthenticated_user
