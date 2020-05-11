@@ -24,21 +24,20 @@ def admin_view_complaints(request):
 @login_required(login_url='login')
 def user_view_complaints(request):
     log_in_user = User.objects.filter(username=request.user.username).first()
-    print(log_in_user)
     complaints = Complaint.objects.filter(author=log_in_user).order_by('created_date')
-    print(complaints)
     no_of_complaints=len(complaints)
     return render(request, 'complaint/complaints_table.html',
-                  context={'complaints': complaints, 'is_user': True, 'user_name':log_in_user, 'no_of_complaints':no_of_complaints,
+                  context={'complaints': complaints, 'is_user': True, 
+                  'user_name':log_in_user, 'no_of_complaints':no_of_complaints,
                  'home_header':'active'})
 
 
-@login_required
+@login_required(login_url='login')
 def logging_out_view(request):
     logout(request)
     return render(request, 'complaint/logout.html')
 
-@login_required
+@login_required(login_url='login')
 @allow_user
 def view_complaint_byid(request):
     id_complaint=request.GET['id']
@@ -69,6 +68,22 @@ def login_view(request):
             return render(request, 'complaint/login.html', {'login_fail' :True})
 
     return render(request, 'complaint/login.html')
+
+@login_required(login_url='login')
+def change_password_view(request):
+    if(request.method =='POST'):
+        new_password=request.POST.get("new_password")
+        request.user.set_password(new_password)
+        print(request.user.username)
+        request.user.save()
+        user = authenticate(username= request.user.username, password = new_password)
+        if user:
+            login(request, user)
+            return HttpResponseRedirect(reverse('login'))
+
+    return render(request, 'complaint/change_password.html')
+
+
 
 
 def sign_up_view(request):
