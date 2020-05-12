@@ -122,11 +122,19 @@ def sign_up_view(request):
 def register_complaint_page(request):
     if(request.method == 'POST'):
         form = RegisterComplaintForm(request.POST)
+        is_anonymous=request.POST.get("is_anonymous")
         if form.is_valid():
             complaint = form.save(commit=False)
             complaint.author = request.user
-            complaint.save()
-            return render(request, 'complaint/register_complaint.html',
+            if is_anonymous :
+                complaint.is_anonymous = True
+                complaint.save()
+                return render(request, 'complaint/register_complaint.html',
+                   context={"form_saved": True,
+                             "register_header": 'active'})
+            else:
+                complaint.save()
+                return render(request, 'complaint/register_complaint.html',
                    context={"form_saved": True,
                              "register_header": 'active'})
         return render(request, 'complaint/register_complaint.html',

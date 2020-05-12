@@ -10,6 +10,8 @@ class Complaint(models.Model):
     title = models.CharField(max_length=400)
     description = models.TextField()
     id = models.AutoField(primary_key=True)
+    is_anonymous= models.BooleanField(default=False)
+    
     STATUS_CHOICES = [
         ('reported', 'Reported'),
         ('in_progress', 'In Progress'),
