@@ -4,12 +4,18 @@
 <div class="title"><u><b><b>Details</b></b></u></div>
 <div class="container">
 <div class="formbox">
+{% if complaint.is_anonymous == False %}
+<p>This is anonymous</p>
+{% endif %}
 	<form>
 		<label for="title"><b>Title of complaint:</label>
-		<input type="text" name="" value= {{ complaint.title }} readonly><br></br>
-		<label for="type">Category</label>
-		<input type="text" name="" value={{ complaint.category }} readonly><br></br>
-		<label for="description">Description:</label><br></br>
+		<input type="text" name="" value= {{complaint.title }} readonly><br></br>
+		<label for="type">Related to:</label>
+		<input type="text" name="" value={{complaint.category }} readonly><br></br>
+		<label for="subject">Complaint Subject:</label>
+		<input type="text" name="" readonly><br></br>
+		
+		<label for="description"> Description:</label><br></br>
 		<textarea id="ta" cols="50" rows="6" placeholder="describe.." >{{complaint.description}}</textarea>
 	<br></br>
 
@@ -24,7 +30,7 @@
 			<p>date: {{ remark.date }}</p>
 		{% endfor %}
 	<br><br><br>
-    </form>
+	</form>
 {% if request.user.profile.is_admin %}
 <form method="post" action="{% url 'view_complaint' complaint.id %}">
 	{% csrf_token %}

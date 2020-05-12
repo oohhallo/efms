@@ -6,10 +6,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-
 from .decorators import unauthenticated_user, admin_only,allow_user
-from .forms import RegisterComplaintForm
+from .forms import RegisterComplaintForm, UserRegistrationForm
 
 
 @login_required(login_url='login')
@@ -101,7 +99,7 @@ def change_password_view(request):
                         "old_pass_wrong": True,
                     })
         else:
-            return render(request, 'complaint/change_password.html', context={
+            return redirect(request, 'complaint/change_password.html', context={
                         "pass_mismatch": True,
                     })
 
@@ -110,7 +108,7 @@ def change_password_view(request):
 
 @unauthenticated_user
 def sign_up_view(request):
-    form = UserCreationForm(request.POST)
+    form=UserRegistrationForm(request.POST)
     if request.method=='POST':
         if form.is_valid():
             user=form.save()
@@ -124,11 +122,19 @@ def sign_up_view(request):
 def register_complaint_page(request):
     if(request.method == 'POST'):
         form = RegisterComplaintForm(request.POST)
+        is_anonymous=request.POST.get("is_anonymous")
         if form.is_valid():
             complaint = form.save(commit=False)
             complaint.author = request.user
-            complaint.save()
-            return render(request, 'complaint/register_complaint.html',
+            if is_anonymous :
+                complaint.is_anonymous = True
+                complaint.save()
+                return render(request, 'complaint/register_complaint.html',
+                   context={"form_saved": True,
+                             "register_header": 'active'})
+            else:
+                complaint.save()
+                return render(request, 'complaint/register_complaint.html',
                    context={"form_saved": True,
                              "register_header": 'active'})
         return render(request, 'complaint/register_complaint.html',
