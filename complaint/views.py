@@ -6,10 +6,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-
 from .decorators import unauthenticated_user, admin_only,allow_user
-from .forms import RegisterComplaintForm
+from .forms import RegisterComplaintForm, UserRegistrationForm
 
 
 @login_required(login_url='login')
@@ -103,7 +101,7 @@ def change_password_view(request):
 
 @unauthenticated_user
 def sign_up_view(request):
-    form=UserCreationForm(request.POST)
+    form=UserRegistrationForm(request.POST)
     if request.method=='POST':
         if form.is_valid():
             user=form.save()
