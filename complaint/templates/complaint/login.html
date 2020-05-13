@@ -9,22 +9,24 @@
 				<form method="post" action="{% url 'login' %}">
                     {% csrf_token %}
 					<p>Username </p>
-					<input type="text" name="username" placeholder="username ">
+					<input type="text" name="username" placeholder="username " required>
 					<p>Password</p>
-					<input type="password" name="password" placeholder="password">
+					<input type="password" name="password" placeholder="password" required>
 					<p></p>
 					<input type="checkbox" id="is_admin" name="is_admin">
-                    <label for="is_admin">admin</label>
+                    <label for="is_admin"><b>Admin</b></label>
 					{% if login_fail %}
 						<p>Invalid username / password</p>
 					{% endif %}
 					{% if not_admin %}
 						<p>You are not an admin!!</p>
 					{% endif %}
-					<a href="#">Forgot password</a>
+					<a href="#"><b>   Forgot password</a>
 					<p></p>
 					<input type="submit" name="" value= "log in">
+				
 				</form>
+				<button onclick="window.location.href='{% url 'signup'%}'">signup</button>
 			</div>
 		</div>
 		</div>

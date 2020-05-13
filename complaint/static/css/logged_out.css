@@ -1,0 +1,154 @@
+body{
+	margin:0;
+	padding:0;
+	background-image:url('name.img/w2.jpeg');
+	opacity:0.80;
+	background-size:cover;
+	font-family:sans-serif;
+	
+}
+
+.title
+{
+	text-align:center;
+	padding:50px 0 20px;
+}
+.title h1
+{
+	margin:1px;
+	padding:0;
+	width:40%;
+	height:50%;
+	background-color: cyan;
+	color:blue;
+	text-transform:uppercase;
+	font-size:36px;
+	
+	
+}
+.container
+{
+	border-radius: 10px;
+	width:70%;
+	height:550px;
+	background:white;
+	margin:0 auto;
+	border:2px solid #fff;
+	box-shadow:0 15px 40px rgba(250,250,250,0);
+	
+}
+
+.container .left
+{
+	float:left;
+	width:60%;
+	height:550px;
+	background-image:url('name.img/w1.jpeg');
+	background-size:cover;
+	box-sizing:border-box;
+	
+	
+}
+
+.container .right
+{
+	float:right;
+	width:40%;
+	height:500px;
+	box-sizing:border-box;
+	
+}
+.formbox
+{
+	font-weight: bold;
+	width:100%;
+	padding:80px 40px;
+	box-sizing:border-box;
+	background:white;
+	
+}
+.formbox padding
+{
+	margin:0;
+	padding:0;
+	font-weight:bold;
+	color:black;
+}
+.formbox input
+{
+	margin-bottom:20px;
+}
+.formbox input[type="text"],
+.formbox input[type="password"]
+{
+	font-size: medium;
+	border:none;
+	border-bottom:2px  solid black;
+	outline:none;
+	height:40px;
+	
+}
+
+.formbox a:hover
+{	font-weight: bold;
+	color:red;
+}
+
+.formbox input[type="submit"]
+{
+	border:none;
+	outline:none;
+	padding:6px 25px;
+	height:40px;
+	color:#fff;
+	background:black;
+	cursor:pointer;
+	border-radius: 6px;
+}
+.formbox input[type="submit"]:hover
+{
+	opacity:0.8;
+	background:rgba(28, 230, 35, 0.87);
+}
+button
+{
+	border:none;
+	outline:none;
+	padding:6px 25px;
+	height:40px;
+	color:#fff;
+	background:black;
+	cursor:pointer;
+	border-radius: 6px;
+}
+button:hover
+{
+	background:rgba(28, 230, 35, 0.87);
+}
+.formbox a
+{
+	background:white;
+	font-size:12px;
+	font-weight:bold;
+}
+
+#atag
+{
+	font-weight: bolder;
+	border:none;
+	outline:none;
+	padding:6px 25px;
+	height:40px;
+	color:#fff;
+	background:black;
+	cursor:pointer;
+	border-radius: 6px;
+}
+#atag:hover
+{height:40px;
+	background-color: green;
+}
+h1{
+	background-color: yellow;
+	text-align: center;
+}
