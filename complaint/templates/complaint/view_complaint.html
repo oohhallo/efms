@@ -4,8 +4,11 @@
 <div class="title"><u><b><b>Details</b></b></u></div>
 <div class="container">
 <div class="formbox">
-{% if complaint.is_anonymous == False %}
+{% if complaint.is_anonymous == True %}
 <p>This is anonymous</p>
+{% else %}
+<p>Username: {{ request.user.username }}</p>
+<p>user email: {{ request.user.email }}</p>
 {% endif %}
 	<form>
 		<label for="title"><b>Title of complaint:</label>
