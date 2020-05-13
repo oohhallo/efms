@@ -5,7 +5,7 @@
 
 {% if zero_complaints %}
   <p>Uh-oh! There are no complaints!you can register your complaint here!</p>
-  <a href=#>Register Here</a>
+  <a href="{% url 'register_complaint'">Register Here</a>
 {% else %}
 <div><h3>
   {% if is_admin %}
@@ -15,7 +15,7 @@
   {% endif %}
 </h3></div>
 <div class="table">
-<table class="complaint">
+<table class="complaint" id="view">
   <tr>
     <th onclick="sorttable(0)">ID</th>
     <th onclick="sorttable(1)">Info</th>
@@ -32,8 +32,64 @@
     <td>{{ complaint.category }}</td>
     <td>{{ complaint.created_date }}</td>
     <td>{{ complaint.status }}</td>
-    <td><a href="{% url 'view_complaint' complaint.id %}" </a>View Details</td>
+    <td><a href="{% url 'view_complaint' complaint.id %}"> View Details</a></td>
   </tr>
   {% endfor %}
+</table>
+</div>
 {% endif %}
+<script type="text/javascript">
+  function sorttable(n) {
+    if(n===0){window.location.reload();return};
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("view");
+  switching = true;
+  dir = "asc";
+  while (switching) {
+   
+    switching = false;
+    rows = table.rows;
+   
+    for (i = 1; i < (rows.length - 1); i++) {
+     
+      shouldSwitch = false;
+     
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+     
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+         
+          shouldSwitch= true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+         
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (Number(x.innerHTML) > Number(y.innerHTML)) {
+       
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+     
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+     
+      switchcount ++;      
+    } else {
+     
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
 {% endblock %}
