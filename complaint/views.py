@@ -8,12 +8,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .decorators import unauthenticated_user, admin_only,allow_user
 from .forms import RegisterComplaintForm, UserRegistrationForm
-
+from django.db.models import Q
 
 @login_required(login_url='login')
 @admin_only
 def admin_view_complaints(request):
-    complaints = Complaint.objects.filter(created_date__lte=timezone.now()).order_by('created_date')
+    complaints = Complaint.objects.filter(~Q(status = 'closed')).order_by('created_date')
     zero_complaints=complaints.count() == 0
     return render(request, 'complaint/complaints_table.html',
                   context={'complaints': complaints , 'is_admin': True,
@@ -23,12 +23,11 @@ def admin_view_complaints(request):
 def user_view_complaints(request):
     log_in_user = User.objects.filter(username=request.user.username).first()
     complaints = Complaint.objects.filter(author=log_in_user).order_by('created_date')
-    no_of_complaints=len(complaints)
+    zero_complaints=complaints.count() == 0
     return render(request, 'complaint/complaints_table.html',
                   context={'complaints': complaints, 'is_user': True, 
-                  'user_name':log_in_user, 'no_of_complaints':no_of_complaints,
+                  'user_name':log_in_user, 'zero_complaints':zero_complaints,
                  'home_header':'active'})
-
 
 @login_required(login_url='login')
 def logging_out_view(request):
