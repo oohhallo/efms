@@ -126,11 +126,12 @@ def register_complaint_page(request):
         is_anonymous=request.POST.get("is_anonymous")
         photo = request.POST.get("photo")
         if form.is_valid():
+            print(request.POST)
             complaint = form.save(commit=False)
             complaint.author = request.user
-            complaint.save()
-            complaint.photo.save(name=str(complaint.id)+".png", content=form.cleaned_data['photo'])
-            #complaint.photo.name = "{complaint.id}" + ".png"
+            complaint.photo = form.cleaned_data['photo']
+            #complaint.photo.save(name=request.POST.get("title")+".png", content="jhkj")
+            #complaint.photo.name = str(complaint.id) + ".png"
             if is_anonymous :
                 complaint.is_anonymous = True
                 complaint.save()
