@@ -92,18 +92,19 @@ def change_password_view(request):
                 if user:
                     login(request, user)
                     return render(request, 'complaint/change_password.html', context={
-                        "pass_changed": True,
+                        "pass_changed": True, 'password_header': 'active'
                     })
             else:
                 return render(request, 'complaint/change_password.html', context={
-                        "old_pass_wrong": True,
+                        "old_pass_wrong": True, 'password_header': 'active'
                     })
         else:
             return redirect(request, 'complaint/change_password.html', context={
-                        "pass_mismatch": True,
+                        "pass_mismatch": True, 'password_header': 'active'
                     })
 
-    return render(request, 'complaint/change_password.html')
+    return render(request, 'complaint/change_password.html',
+                  {'password_header': 'active'})
 
 
 @unauthenticated_user
