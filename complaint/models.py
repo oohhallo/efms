@@ -11,6 +11,7 @@ class Complaint(models.Model):
     description = models.TextField()
     id = models.AutoField(primary_key=True)
     is_anonymous= models.BooleanField(default=False)
+    photo = models.ImageField(null=True, default=None,)
     
     STATUS_CHOICES = [
         ('reported', 'Reported'),
