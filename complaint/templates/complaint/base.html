@@ -18,7 +18,7 @@
       <a href="{% url 'register_complaint' %}" class="{{ register_header }}"><i class="fa fa-fw fa-envelope"></i> Register</a>
 
       {% if request.user.profile.is_admin %}
-      <a class="{{ home_header }" href="{% url 'admin_complaints_view' %}"><i class="fa fa-fw fa-home"></i> Home</a>
+      <a href="{% url 'admin_complaints_view' %}" class="{{ home_header }}"><i class="fa fa-fw fa-home"></i> Home</a>
       <p>Welcome Admin!!</p>
       {% else %}
       <a href="{% url 'user_complaints_view' %}" class="{{ home_header }}"><i class="fa fa-fw fa-home"></i> Home</a>
