@@ -11,7 +11,7 @@
 {% if form_saved %}
 <p>complaint registered! File another complaint below.</p>
 {% endif %}
-<form method="post" action="{% url 'register_complaint' %}">
+<form method="post" action="{% url 'register_complaint' %}" enctype="multipart/form-data">
     {% csrf_token %}
     <label for="typ"><b><b>Type of complaint:</label>
   <select id="comp" name="category">
