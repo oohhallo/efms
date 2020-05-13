@@ -27,6 +27,9 @@
 		
 		<label for="stat">Status:</label>
 		<input type="text" name="" value={{complaint.status}}><br></br>
+		{% if complaint.photo %}
+			<img src="{{ complaint.photo.url }}" width="500px" height="500px" >
+		{% endif %}
 		{% for remark in remarks %}
 			<label for="remarks">Remarks:</label><br></br>
 			<textarea id="ta" cols="50" rows="6" >{{ remark.text }}</textarea>
