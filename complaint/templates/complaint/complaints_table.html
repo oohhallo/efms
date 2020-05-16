@@ -29,7 +29,9 @@
   <tr>
     <td>{{ complaint.id }}</td>
     <td>{{ complaint.title }}</td>
-    <td>{{ complaint.category }}</td>
+    <form method='get' action="{{view_url}}">
+      <td><button value="{{ complaint.category }}" name="filter_by_category">{{ complaint.category }}</button></td>
+    </form>
     <td>{{ complaint.created_date }}</td>
     <td>{{ complaint.status }}</td>
     <td><a href="{% url 'view_complaint' complaint.id %}"> View Details</a></td>

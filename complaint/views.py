@@ -14,20 +14,27 @@ from .forms import RegisterComplaintForm, UserRegistrationForm
 @admin_only
 def admin_view_complaints(request):
     complaints = Complaint.objects.filter(created_date__lte=timezone.now()).order_by('created_date')
+    filter_by = request.GET.get('filter_by_category')
+    if filter_by in [i[0] for i in Complaint.CATEGORY_CHOICES]:
+        complaints=Complaint.objects.filter(category=filter_by)
     zero_complaints=complaints.count() == 0
     return render(request, 'complaint/complaints_table.html',
                   context={'complaints': complaints , 'is_admin': True,
-                           'zero_complaints':zero_complaints, 'home_header':'active'})
+                           'zero_complaints':zero_complaints, 'home_header':'active',
+                           'view_url': reverse('admin_complaints_view')})
 
 @login_required(login_url='login')
 def user_view_complaints(request):
     log_in_user = User.objects.filter(username=request.user.username).first()
     complaints = Complaint.objects.filter(author=log_in_user).order_by('created_date')
+    filter_by = request.GET.get('filter_by_category')
+    if filter_by in [i[0] for i in Complaint.CATEGORY_CHOICES]:
+        complaints=Complaint.objects.filter(category=filter_by,author=log_in_user)
     no_of_complaints=len(complaints)
     return render(request, 'complaint/complaints_table.html',
                   context={'complaints': complaints, 'is_user': True, 
                   'user_name':log_in_user, 'no_of_complaints':no_of_complaints,
-                 'home_header':'active'})
+                 'home_header':'active', 'view_url': reverse('user_complaints_view')})
 
 
 @login_required(login_url='login')
