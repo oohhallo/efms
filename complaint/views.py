@@ -8,15 +8,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .decorators import unauthenticated_user, admin_only,allow_user
 from .forms import RegisterComplaintForm, UserRegistrationForm
-
+from django.db.models import Q
 
 @login_required(login_url='login')
 @admin_only
 def admin_view_complaints(request):
-    complaints = Complaint.objects.filter(created_date__lte=timezone.now()).order_by('created_date')
+    complaints = Complaint.objects.filter(~Q(status = 'closed')).order_by('created_date')
     filter_by = request.GET.get('filter_by_category')
     if filter_by in [i[0] for i in Complaint.CATEGORY_CHOICES]:
-        complaints=Complaint.objects.filter(category=filter_by)
+        complaints=Complaint.objects.filter(category=filter_by, ~Q(status = 'closed'))
     zero_complaints=complaints.count() == 0
     return render(request, 'complaint/complaints_table.html',
                   context={'complaints': complaints , 'is_admin': True,
@@ -35,7 +35,6 @@ def user_view_complaints(request):
                   context={'complaints': complaints, 'is_user': True, 
                   'user_name':log_in_user, 'no_of_complaints':no_of_complaints,
                  'home_header':'active', 'view_url': reverse('user_complaints_view')})
-
 
 @login_required(login_url='login')
 def logging_out_view(request):
@@ -133,11 +132,12 @@ def register_complaint_page(request):
         is_anonymous=request.POST.get("is_anonymous")
         photo = request.POST.get("photo")
         if form.is_valid():
+            print(request.POST)
             complaint = form.save(commit=False)
             complaint.author = request.user
-            complaint.save()
-            complaint.photo.save(name=str(complaint.id)+".png", content=form.cleaned_data['photo'])
-            #complaint.photo.name = "{complaint.id}" + ".png"
+            complaint.photo = form.cleaned_data['photo']
+            #complaint.photo.save(name=request.POST.get("title")+".png", content="jhkj")
+            #complaint.photo.name = str(complaint.id) + ".png"
             if is_anonymous :
                 complaint.is_anonymous = True
                 complaint.save()
