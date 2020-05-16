@@ -16,7 +16,7 @@ def admin_view_complaints(request):
     complaints = Complaint.objects.filter(~Q(status = 'closed')).order_by('created_date')
     filter_by = request.GET.get('filter_by_category')
     if filter_by in [i[0] for i in Complaint.CATEGORY_CHOICES]:
-        complaints=Complaint.objects.filter(category=filter_by, ~Q(status = 'closed'))
+        complaints=Complaint.objects.filter(~Q(status = 'closed'), category=filter_by)
     zero_complaints=complaints.count() == 0
     return render(request, 'complaint/complaints_table.html',
                   context={'complaints': complaints , 'is_admin': True,
