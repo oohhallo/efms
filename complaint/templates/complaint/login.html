@@ -1,33 +1,65 @@
 {% extends 'complaint/loggedout_base.html' %}
 {% block title %} Login : CTS{% endblock %}
+{% load static %}
 {% block content %}
-	<div  class="title"><h1>Login to Continue</h1></div>
-	<div class="container">
-		<div class="left"></div>
-		<div class="right">
-			<div class="formbox">
-				<form method="post" action="{% url 'login' %}">
-                    {% csrf_token %}
-					<p>Username </p>
-					<input type="text" name="username" placeholder="username " required>
-					<p>Password</p>
-					<input type="password" name="password" placeholder="password" required>
-					<p></p>
-					<input type="checkbox" id="is_admin" name="is_admin">
-                    <label for="is_admin"><b>Admin</b></label>
-					{% if login_fail %}
-						<p>Invalid username / password</p>
-					{% endif %}
-					{% if not_admin %}
-						<p>You are not an admin!!</p>
-					{% endif %}
-					<a href="#"><b>   Forgot password</a>
-					<p></p>
-					<input type="submit" name="" value= "log in">
-				
-				</form>
-				<button onclick="window.location.href='{% url 'signup'%}'">signup</button>
-			</div>
-		</div>
-		</div>
+<div class="limiter">
+<div class="container-login100">
+<div class="wrap-login100">
+
+<div class="login100-pic js-tilt" data-tilt>
+<img src="{% static 'images/logo.png' %}" alt="IMG">
+</div>
+
+<form method="post" action="{% url 'login' %}" class="login100-form validate-form">
+{% csrf_token %}
+<span class="login100-form-title">
+Welcome to Login Page
+</span>
+
+<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+<label for="username"><b>Username:</b></label>
+<input class="input100" type="text" name="username" placeholder="Username">
+<span class="focus-input100"></span>
+<span class="symbol-input100">
+<i class="fa fa-envelope" aria-hidden="true"></i>
+</span>
+</div>
+
+<div class="wrap-input100 validate-input" data-validate = "Password is required">
+<label for="password"><b>Password:</b></label>
+<input class="input100" type="password" name="password" placeholder="Password">
+<span class="focus-input100"></span>
+<span class="symbol-input100">
+<i class="fa fa-lock" aria-hidden="true"></i>
+</span>
+</div>
+
+<div class="container-login100-form-btn">
+<button class="login100-form-btn">
+Login
+</button>
+<label>
+        <input type="checkbox" id="is_admin" name="is_admin"> Admin
+      </label>
+</div>
+<div class="text-center p-t-12">
+<span class="txt1">
+Forgot
+</span>
+<a class="txt2" href="#">
+Username / Password?
+</a>
+</div>
+
+<div class="text-center p-t-136">
+<a class="txt2" href="#">
+Create your Account
+<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+</a>
+</div>
+</form>
+
+</div>
+</div>
+</div>
 {% endblock %}

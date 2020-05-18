@@ -28,7 +28,7 @@
 		<label for="stat">Status:</label>
 		<input type="text" name="" value={{complaint.status}}><br></br>
 		{% if complaint.photo %}
-			<img src="{{ complaint.photo.url }}" width="500px" height="500px" >
+			<img src="{{ complaint.photo.url }}">
 		{% endif %}
 		{% for remark in remarks %}
 			<label for="remarks">Remarks:</label><br></br>
