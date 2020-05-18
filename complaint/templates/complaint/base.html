@@ -15,12 +15,13 @@
 
       <a href="{% url 'logout' %}"><i class="fa fa-fw fa-user"></i> Logout</a>
       <a  href="{% url 'change-password' %}" class="{{ password_header }}"><i class="fa fa-gear"></i> Change Password</a>
-      <a href="{% url 'register_complaint' %}" class="{{ register_header }}"><i class="fa fa-fw fa-envelope"></i> Register</a>
 
       {% if request.user.profile.is_admin %}
       <a href="{% url 'admin_complaints_view' %}" class="{{ home_header }}"><i class="fa fa-fw fa-home"></i> Home</a>
       <p>Welcome Admin!!</p>
       {% else %}
+      <a href="{% url 'register_complaint' %}" class="{{ register_header }}"><i class="fa fa-fw fa-envelope"></i> Register</a>
+
       <a href="{% url 'user_complaints_view' %}" class="{{ home_header }}"><i class="fa fa-fw fa-home"></i> Home</a>
         <p>Welcome {{ user_name }}!!</p>
       {% endif %}
