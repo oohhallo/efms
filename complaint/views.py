@@ -39,7 +39,7 @@ def user_view_complaints(request):
 @login_required(login_url='login')
 def logging_out_view(request):
     logout(request)
-    return render(request, 'complaint/logout.html')
+    return HttpResponseRedirect(reverse('login'))
 
 @login_required(login_url='login')
 @allow_user
@@ -118,6 +118,7 @@ def sign_up_view(request):
     form=UserRegistrationForm(request.POST)
     if request.method=='POST':
         if form.is_valid():
+            print("hello")
             user=form.save()
             login(request,user)
             return HttpResponseRedirect(reverse('user_complaints_view'))

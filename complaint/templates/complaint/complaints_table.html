@@ -7,13 +7,13 @@
   <p>Uh-oh! There are no complaints!you can register your complaint here!</p>
   <a href="{% url 'register_complaint'">Register Here</a>
 {% else %}
-<div><h3>
+<h3>
   {% if is_admin %}
   Complaints
   {% else %}
   Your Complaints
   {% endif %}
-</h3></div>
+</h3>
 <div class="table">
 <table class="complaint" id="view">
   <tr>
@@ -30,7 +30,7 @@
     <td>{{ complaint.id }}</td>
     <td>{{ complaint.title }}</td>
     <form method='get' action="{{view_url}}">
-      <td><button value="{{ complaint.category }}" name="filter_by_category">{{ complaint.category }}</button></td>
+      <td><button id="filter-category" value="{{ complaint.category }}" name="filter_by_category">{{ complaint.category }}</button></td>
     </form>
     <td>{{ complaint.created_date }}</td>
     <td>{{ complaint.status }}</td>

@@ -1,9 +1,9 @@
 {% extends 'complaint/base.html' %}
 {% block title %} {{ complaint.title }} {% endblock %}
 {% block content %}
-<div class="title"><u><b><b>Details</b></b></u></div>
-<div class="container">
-<div class="formbox">
+<div class="container" id="print">
+	<div class="formbox">
+	<div class="title"><u><b><b>Details</b></b></u></div>
 {% if complaint.is_anonymous == True %}
 <p>This is anonymous</p>
 {% else %}
@@ -32,7 +32,7 @@
 		{% endif %}
 		{% for remark in remarks %}
 			<label for="remarks">Remarks:</label><br></br>
-			<textarea id="ta" cols="50" rows="6" >{{ remark.text }}</textarea>
+			<textarea class="hide-remarks-border" id="ta" cols="50" rows="6" >{{ remark.text }}</textarea>
 			<p>date: {{ remark.date }}</p>
 		{% endfor %}
 	<br><br><br>
@@ -50,9 +50,22 @@
 	</select>
 	<label for="remarks">Remarks:</label><br></br>
 	<textarea id="ta" cols="50" rows="6" name=remark></textarea>
-	<button type="submit" value="submit">Update</button>
+	<button class="update-button" type="submit" value="submit">Update</button>
 </form>
 {% endif %}
+<button onclick="printDiv()" class="example-screen" style='margin-left: 50px;font-size: 22px'>Print</button>
 </div>
+<script>
+	function printDiv() {
+     var printContents = document.getElementById("print").innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+}
+</script>
 </div>
 {% endblock %}

@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
 </head>
 
 <body>
@@ -18,12 +19,12 @@
 
       {% if request.user.profile.is_admin %}
       <a href="{% url 'admin_complaints_view' %}" class="{{ home_header }}"><i class="fa fa-fw fa-home"></i> Home</a>
-      <p>Welcome Admin!!</p>
+      <span class="welcome-txt">Welcome Admin!!</span>
       {% else %}
       <a href="{% url 'register_complaint' %}" class="{{ register_header }}"><i class="fa fa-fw fa-envelope"></i> Register</a>
 
       <a href="{% url 'user_complaints_view' %}" class="{{ home_header }}"><i class="fa fa-fw fa-home"></i> Home</a>
-        <p>Welcome {{ user_name }}!!</p>
+        <span class="welcome-txt">Welcome {{ request.user.username }}!!</span>
       {% endif %}
 
     </div>
@@ -31,5 +32,8 @@
     {% block content %}
     {% endblock %}
 
+      <footer>
+      <p>&copy;Copyrights Dinesh, Sahiti, Sai Kumar.</p>
+      </footer>
     </body>
 </html>

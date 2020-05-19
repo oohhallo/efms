@@ -2,12 +2,12 @@
 
 {% block content %}
 
-<div class="title"><b>Register complaint.</b></div>
 
 <div class ="container">
 <div class="left"></div>
 <div class="right">
 <div class="formbox">
+<div class="title"><b>Register complaint.</b></div>
 {% if form_saved %}
 <p>complaint registered! File another complaint below.</p>
 {% endif %}
@@ -29,11 +29,12 @@
 <label for="des">Description :</label><br></br>
 <input type="text" name="title" placeholder="enter subject" required><br><br>
 <textarea id="ta" cols="50" rows="6" placeholder="describe.." name="description"></textarea>
+<br>
 <label for="id_photo">Photo:</label> <input type="file" name="photo" accept="image/*" id="id_photo">
 <br></br>
 {% if invalid_form %}<p>Invalid form. Try again!</p>{% endif %}
 <input type="checkbox" id="anonymous" name="is_anonymous">
-<label for="is_anonymous">Anonymous</label>
+<label for="is_anonymous">Anonymous</label><br>
 <button type="submit" name="" value= "submit">Submit</button>
 </form>
 </div>
