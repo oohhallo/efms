@@ -2,15 +2,16 @@
 {% block title %} {{ complaint.title }} {% endblock %}
 {% block content %}
 <div class="container" id="print">
-	<div class="formbox">
-	<div class="title"><u><b><b>Details</b></b></u></div>
+	<div class="formbox2">
+	<div class="title1"><u><b><b>Details</b></b></u></div>
+	<form class="co">
 {% if complaint.is_anonymous == True %}
 <p>This is anonymous</p>
 {% else %}
 <p>Username: {{ request.user.username }}</p>
 <p>user email: {{ request.user.email }}</p>
 {% endif %}
-	<form>
+	<form class="db">
 		<label for="title"><b>Title of complaint:</label>
 		<input type="text" name="" value= {{complaint.title }} readonly><br></br>
 		<label for="type">Related to:</label>
@@ -38,7 +39,7 @@
 	<br><br><br>
 	</form>
 {% if request.user.profile.is_admin %}
-<form method="post" action="{% url 'view_complaint' complaint.id %}">
+<form class="db" method="post" action="{% url 'view_complaint' complaint.id %}">
 	{% csrf_token %}
 	<label for="status">Status</label>
 	<select name="status">
@@ -52,8 +53,9 @@
 	<textarea id="ta" cols="50" rows="6" name=remark></textarea>
 	<button class="update-button" type="submit" value="submit">Update</button>
 </form>
+</form>
 {% endif %}
-<button onclick="printDiv()" class="example-screen" style='margin-left: 50px;font-size: 22px'>Print</button>
+<button onclick="printDiv()" class="example-screen" id="print-btn">Print</button>
 </div>
 <script>
 	function printDiv() {
