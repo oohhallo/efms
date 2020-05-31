@@ -228,3 +228,10 @@
     color: black;
   }
   
+  #complaint_counts{
+    text-align: center;
+  }
+  
+  textarea{
+    resize:none;
+  }

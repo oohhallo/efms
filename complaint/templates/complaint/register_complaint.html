@@ -177,6 +177,15 @@
   cursor:pointer;
 }
 
+.footer{
+    position: relative;
+    left:0;
+    bottom:0;
+    text-align: center;
+    margin: 0% 40%;
+    color: black;
+  }
+
 .formbox input[type="submit"]:hover
 {
   background:#4CAF50;
@@ -240,7 +249,11 @@ h3{
 <div class="left"></div>
 <div class="right">
   <br>
-  <div class="title"><b>Register complaint.</b></div>
+  {% if edit %}
+   <div class="title"><b>Edit complaint.</b></div>
+  {% else %}
+   <div class="title"><b>Register complaint.</b></div>
+  {% endif %}
 <br><br>
 <div class="formbox">
 <br><br><br>
@@ -263,16 +276,27 @@ h3{
   </select>
 <br></br>
 <label for="des">Description :</label><br></br>
-<input type="text" name="title" placeholder="enter subject" required><br><br>
-<textarea id="ta" cols="50" rows="6" placeholder="describe.." name="description"></textarea>
+{% if edit %}
+ <input type="text" name="title" placeholder="enter subject" value={{ complaint.title }} required><br><br>
+ <textarea id="ta" cols="45" rows="10" placeholder="describe.."  >{{ complaint.description }}</textarea>
+ {% else %}
+ <input type="text" name="title" placeholder="enter subject" required><br><br>
+ <textarea id="ta" cols="45" rows="10" placeholder="describe.." name="description"></textarea>
+ 
+{% endif %}
 <br>
 <label for="id_photo">Photo:</label> <input type="file" name="photo" accept="image/*" id="id_photo">
 <br></br>
 {% if invalid_form %}<p>Invalid form. Try again!</p>{% endif %}
-<input type="checkbox" id="anonymous" name="is_anonymous">
-<label for="is_anonymous">Anonymous</label><br>
-<button class="sub-reg" type="submit" name="" value= "submit">Submit</button>
+{% if edit %}
+  <a class="sub-reg" href='{% url 'edit_dialog' complaint.id %}'" type="" name="" value= "submit">Update</a>
+
+{% else %}
+ <button class="sub-reg" type="submit" name="" value= "submit">Submit</button>
+{% endif %}
 </form>
+</div>
+</div>
 </div>
 
 {% endblock %}

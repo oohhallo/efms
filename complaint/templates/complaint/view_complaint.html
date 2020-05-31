@@ -11,23 +11,27 @@
 <p>Username: {{ request.user.username }}</p>
 <p>user email: {{ request.user.email }}</p>
 {% endif %}
-	<form class="db">
-		<label for="title"><b>Title of complaint:</label>
+	<form class="db">	<br></br>
+	
+	<div class="left">
+		<label for="title"><b>Complaint Subject:</label><br></br>
+			<label id="l" for="type">Related to:</label><br></br>
+		<!--	<label id="l" for="subject">Complaint Subject:</label><br></br> -->
+			<label id="l" for="description"> Description:</label><br></br><br><br><br><br>
+			<label id="l" for="datetime">Date of Submit:</label><br></br>
+			<label id="l" for="stat">Status:</label><br>
+		</div>
+	<div class="right">
 		<input type="text" name="" value= {{complaint.title }} readonly><br></br>
-		<label for="type">Related to:</label>
 		<input type="text" name="" value={{complaint.category }} readonly><br></br>
-		<label for="subject">Complaint Subject:</label>
-		<input type="text" name="" readonly><br></br>
+		<!--<input type="text" name="" readonly><br></br>-->
+		<textarea id="ta" cols="50" rows="5" placeholder="describe.." style="width: 414px; height: 92px;" readonly>{{complaint.description}}</textarea><br></br><br>
+		<textarea  cols="30" rows="1" style="width: 271px; height: 17px;" readonly>{{complaint.created_date }}</textarea><br></br>
+		<input type="text" name="" value={{complaint.status}}>
+	</div>
 		
-		<label for="description"> Description:</label><br></br>
-		<textarea id="ta" cols="50" rows="6" placeholder="describe.." >{{complaint.description}}</textarea>
-	<br></br>
-
-		<label for="datetime">Date of Submit:</label>
-		<textarea id="ta" cols="20" rows=1 readonly>{{complaint.created_date }}</textarea><br></br>
 		
-		<label for="stat">Status:</label>
-		<input type="text" name="" value={{complaint.status}}><br></br>
+		
 		{% if complaint.photo %}
 			<img src="{{ complaint.photo.url }}">
 		{% endif %}
@@ -55,18 +59,17 @@
 </form>
 </form>
 {% endif %}
-<button onclick="printDiv()" class="example-screen" id="print-btn">Print</button>
+<button onclick="printDiv('print')" class="example-screen" id="print-btn">Print</button>
 </div>
 <script>
-	function printDiv() {
+	function printDiv(print) {
      var printContents = document.getElementById("print").innerHTML;
      var originalContents = document.body.innerHTML;
-
-     document.body.innerHTML = printContents;
-
-     window.print();
-
-     document.body.innerHTML = originalContents;
+	 originalContents=window.open("");
+	 originalContents.document.write(printContents);
+	 originalContents.print();
+	 originalContents.close();
+  
 }
 </script>
 </div>
