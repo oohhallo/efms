@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Complaint, Remark
+from .models import Complaint, Remark, CATEGORY_CHOICES
 from django.utils import timezone
 from django.contrib.auth import authenticate, login,logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -15,7 +15,10 @@ from django.db.models import Q
 def admin_view_complaints(request):
     complaints = Complaint.objects.filter(~Q(status = 'closed')).order_by('created_date')
     filter_by = request.GET.get('filter_by_category')
-    if filter_by in [i[0] for i in Complaint.CATEGORY_CHOICES]:
+    if(request.user.profile.head_of != 'other'):
+        complaints = Complaint.objects.filter(~Q(status = 'closed'), ~Q(status = 'comlpeted'),category=request.user.profile.head_of)
+    
+    if filter_by in [i[0] for i in CATEGORY_CHOICES]:
         complaints=Complaint.objects.filter(~Q(status = 'closed'), category=filter_by)
     zero_complaints=complaints.count() == 0
     return render(request, 'complaint/complaints_table.html',
@@ -28,7 +31,7 @@ def user_view_complaints(request):
     log_in_user = User.objects.filter(username=request.user.username).first()
     complaints = Complaint.objects.filter(author=log_in_user).order_by('created_date')
     filter_by = request.GET.get('filter_by_category')
-    if filter_by in [i[0] for i in Complaint.CATEGORY_CHOICES]:
+    if filter_by in [i[0] for i in CATEGORY_CHOICES]:
         complaints=Complaint.objects.filter(category=filter_by,author=log_in_user)
     no_of_complaints=len(complaints)
     return render(request, 'complaint/complaints_table.html',
@@ -67,7 +70,7 @@ def login_view(request):
         user = authenticate(username=username, password=password)
         if user:
             
-            if is_admin =='on':
+            if is_admin =='on' or user.profile.is_admin:
                 if user.profile.is_admin:
                     login(request,user)
                     return HttpResponseRedirect(reverse('admin_complaints_view'))

@@ -5,6 +5,17 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+CATEGORY_CHOICES = [
+    ('academic','Academic'),
+    ('mess', 'Mess'),
+    ('sports', 'Sports'),
+    ('student_affairs', 'Student affairs'),
+    ('hostel', 'Hostel'),
+    ('security', 'Security'),
+    ('guest_house', 'Guest House'),
+    ('library', 'Library'),
+    ('other', 'Other'),
+]
 class Complaint(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=400)
@@ -24,17 +35,6 @@ class Complaint(models.Model):
         choices=STATUS_CHOICES,
         default='reported',
     )
-    CATEGORY_CHOICES = [
-        ('academic','Academic'),
-        ('mess', 'Mess'),
-        ('sports', 'Sports'),
-        ('student_affairs', 'Student affairs'),
-        ('hostel', 'Hostel'),
-        ('security', 'Security'),
-        ('guest_house', 'Guest House'),
-        ('library', 'Library'),
-        ('other', 'Other'),
-    ]
     category = models.CharField(
         max_length=18,
         choices=CATEGORY_CHOICES,
@@ -52,6 +52,11 @@ class Complaint(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     is_admin = models.BooleanField(default=False)
+    head_of = models.CharField(
+        max_length=18,
+        choices = CATEGORY_CHOICES,
+        default = ''
+    )
 
 class Remark(models.Model):
     text = models.TextField()
