@@ -20,11 +20,11 @@
 {% else %}
 <div id="complaint_counts">
 <label><b>Total Registerd:</b></label>
-<input type="text" value="{{ complaint_count }}" readonly>
+<span>{{ complaint_count }}</span>
 <label><b>Total Pending:</b></label>
-<input type="text" value="{{ total_pending }}" readonly>
+<span>{{ total_pending }}</span>
 <label><b>Total Closed:</b></label>
-<input type="text" value="{{ total_closed }}" readonly>
+<span>{{ total_closed }}</span>
 </div>
 {% endif %}
 <br>
