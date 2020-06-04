@@ -125,3 +125,11 @@ for (var i = 0; i < deleteLinks.length; i++) {
 }
 </script>
 {% endblock %}
+
+{% if request.user.profile.is_admin %}
+{% block footer %}
+<div class="footer-adm">
+  <p>&copy;Copyrights Dinesh, Sahiti, Sai Kumar.</p>
+</div>
+{% endblock %}
+{% endif %}

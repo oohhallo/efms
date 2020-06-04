@@ -207,6 +207,14 @@ button:hover {
   color: black;
 }
 
+.footer-adm{
+  position: relative;
+  left:0;
+  bottom:0;
+  text-align: center;
+  margin: 0% 40%;
+  color: black;
+}
 
 .container1
 {
