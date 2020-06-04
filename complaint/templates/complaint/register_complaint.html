@@ -178,7 +178,7 @@
 }
 
 .footer{
-    position: relative;
+    position: absolute;
     left:0;
     bottom:0;
     text-align: center;
@@ -262,7 +262,7 @@ h3{
 {% endif %}
 <form class="reg-complaint" method="post" action="{% url 'register_complaint' %}" enctype="multipart/form-data">
     {% csrf_token %}
-    <label for="typ"><b><b>Type of complaint:</label>
+    <label for="typ"><b>Type of complaint:</b></label>
   <select id="comp" name="category">
     <option value="academic">Academics</option>
     <option value="mess">Mess</option>
@@ -274,6 +274,23 @@ h3{
     <option value="library">Library</option>
     <option value="other">Other</option>
   </select>
+  <br></br>
+<label for="myCheck">Choose branch:</label> 
+<input type="checkbox" id="myCheck" onclick="myFunction()">
+<br><br>
+<div id="text" style="display:none">
+  <select name="branch" id="branch" >
+    <option value="cse">Cse</option>
+    <option value="ece">Ece</option>
+    <option value="eee">Eee</option>
+    <option value="civil">Civil</option>
+    <option value="mech">Mechanical</option>
+    <option value="mme">Mme</option>
+    <option value="chemical">Chemical</option>
+    <option value="biotech">Biotech</option>
+
+  </select>
+ </div>
 <br></br>
 <label for="des">Description :</label><br></br>
 {% if edit %}
@@ -298,5 +315,15 @@ h3{
 </div>
 </div>
 </div>
-
+<script>
+function myFunction() {
+  var checkBox = document.getElementById("myCheck");
+  var text = document.getElementById("text");
+  if (checkBox.checked == true){
+    text.style.display = "block";
+  } else {
+     text.style.display = "none";
+  }
+}
+</script>
 {% endblock %}

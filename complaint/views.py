@@ -165,6 +165,8 @@ def register_complaint_page(request):
             recipient_emails = []
             for user_profile in recipient_profiles:
                 recipient_emails += [user_profile.user.email]
+            branch = request.POST.get('branch')
+            complaint.category += f' [{branch}]'
             #complaint.photo.save(name=request.POST.get("title")+".png", content="jhkj")
             #complaint.photo.name = str(complaint.id) + ".png"
             if is_anonymous :

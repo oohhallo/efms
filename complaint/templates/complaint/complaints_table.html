@@ -19,12 +19,12 @@
 {% if is_admin %}
 {% else %}
 <div id="complaint_counts">
-<label><b>Total Registerd:</b></label>
-<span>{{ complaint_count }}</span>
-<label><b>Total Pending:</b></label>
-<span>{{ total_pending }}</span>
-<label><b>Total Closed:</b></label>
-<span>{{ total_closed }}</span>
+  <label><b>Total Registerd:</b></label>
+  <input type="text" value="{{ complaint_count }}" style="border:none;" readonly>
+  <label><b>Total Pending:</b></label>
+  <input type="text" value="{{ total_pending }}" style="border:none;" readonly>
+  <label><b>Total Closed:</b></label>
+  <input type="text" value="{{ total_closed }}" style="border:none;" readonly>
 </div>
 {% endif %}
 <br>
@@ -49,7 +49,7 @@
     <td>{{ complaint.status }}</td>
     <td><a href="{% url 'view_complaint' complaint.id %}"> View |</a>
       <a href="{% url 'edit_complaint' complaint.id %}"> Edit |</a>
-      <a href="{% url 'delete_complaint' complaint.id %}"> Delete</a>
+      <a href="{% url 'delete_complaint' complaint.id %}" class="delete" data-confirm="Are you sure to delete this item?"> Delete</a>
     </td>
   </tr>
   {% endfor %}
@@ -108,6 +108,20 @@
       }
     }
   }
+}
+
+var deleteLinks = document.querySelectorAll('.delete');
+
+for (var i = 0; i < deleteLinks.length; i++) {
+  deleteLinks[i].addEventListener('click', function(event) {
+      event.preventDefault();
+
+      var choice = confirm(this.getAttribute('data-confirm'));
+
+      if (choice) {
+        window.location.href = this.getAttribute('href');
+      }
+  });
 }
 </script>
 {% endblock %}
