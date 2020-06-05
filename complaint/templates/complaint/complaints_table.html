@@ -54,6 +54,11 @@
   </tr>
   {% endfor %}
 </table>
+{% if show_back_btn %}
+<form method="get" action="{{view_url}}" style="position: relative;margin-left:45%;">
+<button type="submit">back</button>
+</form>
+{% endif %}
 </div>
 {% endif %}
 <script type="text/javascript">

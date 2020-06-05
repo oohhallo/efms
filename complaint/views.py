@@ -19,14 +19,16 @@ def admin_view_complaints(request):
     filter_by = request.GET.get('filter_by_category')
     if(request.user.profile.head_of != 'other' and request.user.profile.head_of != ''):
         complaints = Complaint.objects.filter(~Q(status = 'closed'), ~Q(status = 'comlpeted'),category=request.user.profile.head_of)
-    
+    show_back_btn = False
     if filter_by in [i[0] for i in CATEGORY_CHOICES]:
+        show_back_btn = True
         complaints=Complaint.objects.filter(~Q(status = 'closed'), category=filter_by)
     zero_complaints=complaints.count() == 0
     return render(request, 'complaint/complaints_table.html',
                   context={'complaints': complaints , 'is_admin': True,
                            'zero_complaints':zero_complaints, 'home_header':'active',
-                           'view_url': reverse('admin_complaints_view')})
+                           'view_url': reverse('admin_complaints_view'),
+                           'show_back_btn': show_back_btn})
 
 @login_required(login_url='login')
 def user_view_complaints(request):
