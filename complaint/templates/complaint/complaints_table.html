@@ -45,38 +45,6 @@
   {% endif %}
   <br />
   {% for complaint in complaints %}
-  <!-- <table class="complaint" id="view">
-    <tr>
-      <td>{{ complaint.id }}</td>
-      <td>{{ complaint.title }}</td>
-      <form method="get" action="{{view_url}}">
-        <td>
-          <button
-            id="filter-category"
-            value="{{ complaint.category }}"
-            name="filter_by_category"
-          >
-            {{ complaint.category }}
-          </button>
-        </td>
-      </form>
-      <td>{{ complaint.created_date }}</td>
-      <td>{{ complaint.status }}</td>
-      <td>
-        <a href="{% url 'view_complaint' complaint.id %}"> View |</a>
-        {% if not is_admin %}<a href="{% url 'edit_complaint' complaint.id %}">
-          Edit |</a
-        >{% endif %}
-        <a
-          href="{% url 'delete_complaint' complaint.id %}"
-          class="delete"
-          data-confirm="Are you sure to delete this item?"
-        >
-          Delete</a
-        >
-      </td>
-    </tr>
-  </table> -->
   <div class="complaint_box">
     <div class="complaint_title">{{ complaint.title }}</div>
     <div class="complaint_id">
@@ -208,6 +176,23 @@
   }
 </script>
 {% endblock %} {% if request.user.profile.is_admin %} {% block footer %}
+
+<script>
+  function submitForm(oFormElement)
+  {
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function(){ alert (xhr.responseText); } // success case
+  xhr.onerror = function(){ alert (xhr.responseText); } // failure case
+  xhr.open (oFormElement.method, oFormElement.action, true);
+  console.log(oFormElement)
+  xhr.send (new FormData (oFormElement));
+  return false;
+}
+</script>
+{% endblock %}
+
+{% if request.user.profile.is_admin %}
+{% block footer %}
 <div class="footer-adm">
   <p>&copy;Copyrights Dinesh, Sahiti, Sai Kumar.</p>
 </div>
