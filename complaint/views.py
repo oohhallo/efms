@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from .models import Complaint, Remark, CATEGORY_CHOICES, Profile
+from .models import Complaint, Remark, CATEGORY_CHOICES, Profile, Vote
 from django.utils import timezone
 from django.contrib.auth import authenticate, login,logout
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -53,7 +53,6 @@ def logging_out_view(request):
     return HttpResponseRedirect(reverse('login'))
 
 @login_required(login_url='login')
-@allow_user
 def view_complaint_byid(request, id):
     complaint = Complaint.objects.filter(id=id)[0]
     if request.method == "POST":
@@ -213,3 +212,34 @@ def edit_complaint_byid(request, id):
             complaint.photo = form.cleaned_data['photo']  
     return render(request, 'complaint/register_complaint.html',
                   context={"register_header": 'active'})
+
+@login_required
+def add_vote(request):
+    if(request.method == "POST"):
+        complaints = Complaint.objects.filter(id=request.POST.get('id'))
+
+        if (len(complaints) == 0):
+            return JsonResponse({
+                result: 'failed',
+                msg: 'Post doesn\'t exits',
+            }, status_code = 400)
+        
+        vote_res = request.POST.get('vote')
+
+        if vote_res not in (-1, 1):
+            return JsonResponse({
+                result: 'failed',
+                msg: 'Invalid vote type',
+            }, status_code = 400)
+
+        vote = Vote(complaint=complaint, vote=vote_res, voter=request.user)
+
+        return JsonResponse({
+            'result':'success',
+            'msg': ''
+        })
+
+    return JsonResponse({
+                result: 'failed',
+                msg: '',
+            }, status_code = 400)
