@@ -89,11 +89,9 @@ def login_view(request):
         password = request.POST.get("password")
         is_admin = request.POST.get("is_admin")
         user = authenticate(username=username, password=password)
-        print('haha')
         if user:
             
             if is_admin =='on' or user.profile.is_admin:
-                print("hehe")
                 if user.profile.is_admin:
                     login(request,user)
                     return HttpResponseRedirect(reverse('admin_complaints_view'))
@@ -102,11 +100,9 @@ def login_view(request):
             
             else:
                 login(request,user)
-                print("HOla")
                 return HttpResponseRedirect(reverse('user_complaints_view'))
 
         else:
-            print('dog')
             return render(request, 'complaint/login.html', {'login_fail' :True})
 
     return render(request, 'complaint/login.html')
@@ -146,7 +142,6 @@ def sign_up_view(request):
     form=UserRegistrationForm(request.POST)
     if request.method=='POST':
         if form.is_valid():
-            print("hello")
             user=form.save()
             login(request,user)
             return HttpResponseRedirect(reverse('user_complaints_view'))
@@ -161,7 +156,6 @@ def register_complaint_page(request):
         is_anonymous=request.POST.get("is_anonymous")
         photo = request.POST.get("photo")
         if form.is_valid():
-            print(request.POST)
             complaint = form.save(commit=False)
             complaint.author = request.user
             complaint.photo = form.cleaned_data['photo']
@@ -210,7 +204,6 @@ def edit_complaint_byid(request, id):
     return render(request, 'complaint/dialog.html',
                   {'complaint': complaint,"edit":True  }) 
     if form.is_valid():
-            print(request.POST)
             complaint = form.save(commit=False)
             complaint.author = request.user
             complaint.photo = form.cleaned_data['photo']  
@@ -220,7 +213,6 @@ def edit_complaint_byid(request, id):
 @login_required
 def add_vote(request):
     if(request.method == "POST"):
-        print(request.POST)
         complaints = Complaint.objects.filter(id=int(request.POST.get('id')[0]))
 
         if (len(complaints) == 0):
