@@ -89,9 +89,11 @@ def login_view(request):
         password = request.POST.get("password")
         is_admin = request.POST.get("is_admin")
         user = authenticate(username=username, password=password)
+        print('haha')
         if user:
             
             if is_admin =='on' or user.profile.is_admin:
+                print("hehe")
                 if user.profile.is_admin:
                     login(request,user)
                     return HttpResponseRedirect(reverse('admin_complaints_view'))
@@ -100,9 +102,11 @@ def login_view(request):
             
             else:
                 login(request,user)
+                print("HOla")
                 return HttpResponseRedirect(reverse('user_complaints_view'))
 
         else:
+            print('dog')
             return render(request, 'complaint/login.html', {'login_fail' :True})
 
     return render(request, 'complaint/login.html')
@@ -216,23 +220,25 @@ def edit_complaint_byid(request, id):
 @login_required
 def add_vote(request):
     if(request.method == "POST"):
-        complaints = Complaint.objects.filter(id=request.POST.get('id'))
+        print(request.POST)
+        complaints = Complaint.objects.filter(id=int(request.POST.get('id')[0]))
 
         if (len(complaints) == 0):
             return JsonResponse({
-                result: 'failed',
-                msg: 'Post doesn\'t exits',
-            }, status_code = 400)
+                'result': 'failed',
+                'msg': 'Post doesn\'t exits',
+            }, status = 400)
         
-        vote_res = request.POST.get('vote')
+        vote_res = int(request.POST.get('vote')[0])
 
         if vote_res not in (-1, 1):
             return JsonResponse({
-                result: 'failed',
-                msg: 'Invalid vote type',
-            }, status_code = 400)
+                'result': 'failed',
+                'msg': 'Invalid vote type',
+            }, status = 400)
 
-        vote = Vote(complaint=complaint, vote=vote_res, voter=request.user)
+        if len(Vote.objects.filter(complaint=complaints.first(), voter=request.user)) == 0:
+            vote = Vote(complaint=complaints.first(), vote=vote_res, voter=request.user)
 
         return JsonResponse({
             'result':'success',
@@ -240,6 +246,6 @@ def add_vote(request):
         })
 
     return JsonResponse({
-                result: 'failed',
-                msg: '',
-            }, status_code = 400)
+                'result': 'failed',
+                'msg': '',
+            }, status = 400)
