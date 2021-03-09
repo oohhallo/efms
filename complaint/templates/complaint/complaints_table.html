@@ -1,140 +1,211 @@
-{% extends 'complaint/base.html' %}
-
-{% block content %}
-<br><br><br>
+{% extends 'complaint/base.html' %} {% block content %} <br /><br /><br />
 
 {% if zero_complaints %}
-  <p>Uh-oh! There are no complaints!you can register your complaint here!</p>
-  <a href="{% url 'register_complaint'">Register Here</a>
+<p>Uh-oh! There are no complaints!you can register your complaint here!</p>
+<a href="{% url 'register_complaint'">Register Here</a>
 {% else %}
-<h3>
-  {% if is_admin %}
-  Complaints
-  {% else %}
-  Your Complaints
+<h3>{% if is_admin %} Complaints {% else %} Your Complaints {% endif %}</h3>
+
+<div class="all_complaints">
+  {% if is_admin %} {% else %}
+  <div id="complaint_counts">
+    <label><b>Total Registerd:</b></label>
+    <input
+      type="text"
+      value="{{ complaint_count }}"
+      style="border: none"
+      readonly
+    />
+    <label><b>Total Pending:</b></label>
+    <input
+      type="text"
+      value="{{ total_pending }}"
+      style="border: none"
+      readonly
+    />
+    <label><b>Total Closed:</b></label>
+    <input
+      type="text"
+      value="{{ total_closed }}"
+      style="border: none"
+      readonly
+    />
+    <div class="dropdown">
+      <button class="dropbtn">Sort By</button>
+      <div class="dropdown-content">
+        <a href="#" onclick="sorttable(0)">ID</a>
+        <a href="#" onclick="sorttable(1)">Info</a>
+        <a href="#" onclick="sorttable(2)">Type</a>
+        <a href="#" onclick="sorttable(3)">Reg.date</a>
+        <a href="#" onclick="sorttable(4)">Status</a>
+        <a href="#" onclick="sorttable(5)"></a>
+      </div>
+    </div>
+  </div>
   {% endif %}
-</h3>
-
-<div class="table">
-{% if is_admin %}
-{% else %}
-<div id="complaint_counts">
-  <label><b>Total Registerd:</b></label>
-  <input type="text" value="{{ complaint_count }}" style="border:none;" readonly>
-  <label><b>Total Pending:</b></label>
-  <input type="text" value="{{ total_pending }}" style="border:none;" readonly>
-  <label><b>Total Closed:</b></label>
-  <input type="text" value="{{ total_closed }}" style="border:none;" readonly>
-</div>
-{% endif %}
-<br>
-<table class="complaint" id="view">
-  <tr>
-    <th onclick="sorttable(0)">ID</th>
-    <th onclick="sorttable(1)">Info</th>
-    <th onclick="sorttable(2)">Type</th>
-    <th onclick="sorttable(3)">Reg.date</th>
-    <th onclick="sorttable(4)">Status</th>
-    <th onclick="sorttable(5)"></th>
-  </tr>
-
+  <br />
   {% for complaint in complaints %}
-  <tr>
-    <td>{{ complaint.id }}</td>
-    <td>{{ complaint.title }}</td>
-    <form method='get' action="{{view_url}}">
-      <td><button id="filter-category" value="{{ complaint.category }}" name="filter_by_category">{{ complaint.category }}</button></td>
-    </form>
-    <td>{{ complaint.created_date }}</td>
-    <td>{{ complaint.status }}</td>
-    <td><a href="{% url 'view_complaint' complaint.id %}"> View |</a>
-      {% if not is_admin %}<a href="{% url 'edit_complaint' complaint.id %}"> Edit |</a>{% endif %}
-      <a href="{% url 'delete_complaint' complaint.id %}" class="delete" data-confirm="Are you sure to delete this item?"> Delete</a>
-    </td>
-  </tr>
-  {% endfor %}
-</table>
-{% if show_back_btn %}
-<form method="get" action="{{view_url}}" style="position: relative;margin-left:45%;">
-<button type="submit">back</button>
-</form>
-{% endif %}
+  <!-- <table class="complaint" id="view">
+    <tr>
+      <td>{{ complaint.id }}</td>
+      <td>{{ complaint.title }}</td>
+      <form method="get" action="{{view_url}}">
+        <td>
+          <button
+            id="filter-category"
+            value="{{ complaint.category }}"
+            name="filter_by_category"
+          >
+            {{ complaint.category }}
+          </button>
+        </td>
+      </form>
+      <td>{{ complaint.created_date }}</td>
+      <td>{{ complaint.status }}</td>
+      <td>
+        <a href="{% url 'view_complaint' complaint.id %}"> View |</a>
+        {% if not is_admin %}<a href="{% url 'edit_complaint' complaint.id %}">
+          Edit |</a
+        >{% endif %}
+        <a
+          href="{% url 'delete_complaint' complaint.id %}"
+          class="delete"
+          data-confirm="Are you sure to delete this item?"
+        >
+          Delete</a
+        >
+      </td>
+    </tr>
+  </table> -->
+  <div class="complaint_box">
+    <div class="complaint_title">{{ complaint.title }}</div>
+    <div class="complaint_id"># {{ complaint.id }}</div>
+    <div class="complaint_image">
+      {% if complaint.photo %}
+      <img src="{{ complaint.photo.url }}" />
+      {% endif %}
+    </div>
+    <div class="complaint_likes">
+      <i
+        id="likebutton"
+        onclick="changeicon(this)"
+        class="fa fa-thumbs-o-up"
+        aria-hidden="true"
+      >
+        <a href="#"></a>
+      </i>
+      {{complaint.likes}}00000
+    </div>
+    <div class="complaint_actions">
+      <a href="{% url 'view_complaint' complaint.id %}"
+        ><button type="button" class="btn btn-info">View</button>
+      </a>
+
+      {% if not is_admin %}
+
+      <a href="{% url 'edit_complaint' complaint.id %}"
+        ><button type="button" class="btn btn-primary">Edit</button>
+      </a>
+
+      {% endif %}
+
+      <a
+        href="{% url 'delete_complaint' complaint.id %}"
+        class="delete"
+        data-confirm="Are you sure to delete this item?"
+        ><button type="button" class="btn btn-danger">Delete</button></a
+      >
+    </div>
+  </div>
+  {% endfor %} {% if show_back_btn %}
+  <form
+    method="get"
+    action="{{view_url}}"
+    style="position: relative; margin-left: 45%"
+  >
+    <button type="submit">back</button>
+  </form>
+  {% endif %}
 </div>
 {% endif %}
 <script type="text/javascript">
+  function changeicon(x) {
+    x.classList.toggle("fa-thumbs-up");
+  }
+
   function sorttable(n) {
-    if(n===0){window.location.reload();return};
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById("view");
-  switching = true;
-  dir = "asc";
-  while (switching) {
-   
-    switching = false;
-    rows = table.rows;
-   
-    for (i = 1; i < (rows.length - 1); i++) {
-     
-      shouldSwitch = false;
-     
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
-     
-      if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-         
-          shouldSwitch= true;
-          break;
+    if (n === 0) {
+      window.location.reload();
+      return;
+    }
+    var table,
+      rows,
+      switching,
+      i,
+      x,
+      y,
+      shouldSwitch,
+      dir,
+      switchcount = 0;
+    table = document.getElementById("view");
+    switching = true;
+    dir = "asc";
+    while (switching) {
+      switching = false;
+      rows = table.rows;
+
+      for (i = 1; i < rows.length - 1; i++) {
+        shouldSwitch = false;
+
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
         }
-      } else if (dir == "desc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-         
+        if (Number(x.innerHTML) > Number(y.innerHTML)) {
           shouldSwitch = true;
           break;
         }
       }
-      if (Number(x.innerHTML) > Number(y.innerHTML)) {
-       
-        shouldSwitch = true;
-        break;
-      }
-    }
-    if (shouldSwitch) {
-     
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-     
-      switchcount ++;      
-    } else {
-     
-      if (switchcount == 0 && dir == "asc") {
-        dir = "desc";
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
         switching = true;
+
+        switchcount++;
+      } else {
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
       }
     }
   }
-}
 
-var deleteLinks = document.querySelectorAll('.delete');
+  var deleteLinks = document.querySelectorAll(".delete");
 
-for (var i = 0; i < deleteLinks.length; i++) {
-  deleteLinks[i].addEventListener('click', function(event) {
+  for (var i = 0; i < deleteLinks.length; i++) {
+    deleteLinks[i].addEventListener("click", function (event) {
       event.preventDefault();
 
-      var choice = confirm(this.getAttribute('data-confirm'));
+      var choice = confirm(this.getAttribute("data-confirm"));
 
       if (choice) {
-        window.location.href = this.getAttribute('href');
+        window.location.href = this.getAttribute("href");
       }
-  });
-}
+    });
+  }
 </script>
-{% endblock %}
-
-{% if request.user.profile.is_admin %}
-{% block footer %}
+{% endblock %} {% if request.user.profile.is_admin %} {% block footer %}
 <div class="footer-adm">
   <p>&copy;Copyrights Dinesh, Sahiti, Sai Kumar.</p>
 </div>
-{% endblock %}
-{% endif %}
+{% endblock %} {% endif %}
