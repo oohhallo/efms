@@ -23,10 +23,15 @@
   align-items: center;
 }
 .complaint_id {
+  display: flex;
   position: absolute;
   right: 20px;
   top: 30px;
   font-size: 1.5rem;
+  align-items: flex-end;
+  justify-content: end;
+  align-items: flex-end;
+  align-content: flex-end;
 }
 
 .complaint_actions {

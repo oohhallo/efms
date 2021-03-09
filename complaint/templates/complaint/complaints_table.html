@@ -79,7 +79,10 @@
   </table> -->
   <div class="complaint_box">
     <div class="complaint_title">{{ complaint.title }}</div>
-    <div class="complaint_id"># {{ complaint.id }}</div>
+    <div class="complaint_id">
+      <div># {{ complaint.id }}</div>
+      <div>{{complaint.created_date }}</div>
+    </div>
     <div class="complaint_image">
       {% if complaint.photo %}
       <img src="{{ complaint.photo.url }}" />
