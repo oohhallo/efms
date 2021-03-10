@@ -64,6 +64,14 @@ class Remark(models.Model):
     complaint = models.ForeignKey(Complaint, on_delete=models.CASCADE)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
+class Vote(models.Model):
+    vote = models.SmallIntegerField(choices=[
+        (1, 'upvote'),
+        (-1, 'downvote'),
+    ])
+    complaint = models.ForeignKey(Complaint, on_delete=models.CASCADE)
+    voter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
