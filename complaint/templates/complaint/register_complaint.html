@@ -196,8 +196,7 @@
 .container
 {
   border-radius: 10px;
-  width: 40%;
-  height: 60%;
+  
   background:white;
   margin:0 auto;
   border:2px solid #fff;
@@ -240,12 +239,15 @@ h3{
   .example-print {
      display: block;
   }
+  #ta{
+    resize:none;
+  }
 
 </style>
 {% endblock %}
 {% block content %}
 
-<div class ="container">
+<div class ="container" style='margin-bottom: 50%;'>
 <div class="left"></div>
 <div class="right">
   <br>
@@ -265,14 +267,15 @@ h3{
     <label for="typ"><b>Type of complaint:</b></label>
   <select id="comp" name="category">
     <option value="academic">Academics</option>
+    <!--
     <option value="mess">Mess</option>
     <option value="sports">Sports</option>
     <option value="student_affairs">Student affairs</option>
     <option value="hostel">Hostel</option>
     <option value="security">Security</option>
-    <option value="guest_house">Guest House</option>
+    <option value="guest_house">Guest House</option> -->
     <option value="library">Library</option>
-    <option value="other">Other</option>
+   <!-- <option value="other">Other</option> -->
   </select>
   <br></br>
 <label for="myCheck">Choose branch:</label> 
@@ -295,14 +298,14 @@ h3{
 <label for="des">Description :</label><br></br>
 {% if edit %}
  <input type="text" name="title" placeholder="enter subject" value={{ complaint.title }} required><br><br>
- <textarea id="ta" cols="45" rows="10" placeholder="describe.."  >{{ complaint.description }}</textarea>
+ <textarea id="ta" cols="45" rows="3" placeholder="describe.."  style="resize: none;">{{ complaint.description }}</textarea>
  {% else %}
  <input type="text" name="title" placeholder="enter subject" required><br><br>
- <textarea id="ta" cols="45" rows="10" placeholder="describe.." name="description"></textarea>
+ <textarea id="ta" cols="45" rows="3" placeholder="describe.." name="description" style="resize: none;"></textarea>
  
 {% endif %}
 <br>
-<label for="id_photo">Photo:</label> <input type="file" name="photo" accept="image/*" id="id_photo">
+<label for="id_photo">Photo:</label> <input type="file" name="photo" accept="image" id="id_photo">
 <br></br>
 {% if invalid_form %}<p>Invalid form. Try again!</p>{% endif %}
 {% if edit %}

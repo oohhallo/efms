@@ -199,6 +199,20 @@ button:hover {
   margin: 0% 40%;
   color: black;
 }
+#footer1 {
+  position: fixed;
+  height: 50px;
+  background-color: black;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
+  color: white;
+  font-weight: bold;
+}
+#flabel{
+  padding-top: 10px;;
+}
 
 .footer-adm {
   position: relative;
