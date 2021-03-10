@@ -196,8 +196,7 @@
 .container
 {
   border-radius: 10px;
-  width: 40%;
-  height: 60%;
+  
   background:white;
   margin:0 auto;
   border:2px solid #fff;
@@ -240,12 +239,15 @@ h3{
   .example-print {
      display: block;
   }
+  #ta{
+    resize:none;
+  }
 
 </style>
 {% endblock %}
 {% block content %}
 
-<div class ="container">
+<div class ="container" style='margin-bottom: 50%;'>
 <div class="left"></div>
 <div class="right">
   <br>
@@ -296,10 +298,10 @@ h3{
 <label for="des">Description :</label><br></br>
 {% if edit %}
  <input type="text" name="title" placeholder="enter subject" value={{ complaint.title }} required><br><br>
- <textarea id="ta" cols="45" rows="10" placeholder="describe.."  >{{ complaint.description }}</textarea>
+ <textarea id="ta" cols="45" rows="3" placeholder="describe.."  >{{ complaint.description }}</textarea>
  {% else %}
  <input type="text" name="title" placeholder="enter subject" required><br><br>
- <textarea id="ta" cols="45" rows="10" placeholder="describe.." name="description"></textarea>
+ <textarea id="ta" cols="45" rows="3" placeholder="describe.." name="description"></textarea>
  
 {% endif %}
 <br>
