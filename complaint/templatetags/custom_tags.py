@@ -12,3 +12,7 @@ def vote_count(complaint, vote_type):
 def voted(voter, complaint_id):
     complaint = Complaint.objects.filter(id=int(complaint_id)).first()
     return len(Vote.objects.filter(complaint=complaint, voter=voter))
+
+@register.filter(name="user_complaint")
+def user_complaint(user, complaint_id):
+    return len(Complaint.objects.filter(id=int(complaint_id), author=user))
