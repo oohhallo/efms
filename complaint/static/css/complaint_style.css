@@ -21,6 +21,11 @@
 
 .complaint_image {
   align-items: center;
+  max-width: 100%px;
+}
+.complaint_image img {
+  max-width: 10%;
+  max-height: 10%;
 }
 .complaint_id {
   display: flex;
