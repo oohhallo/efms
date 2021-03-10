@@ -242,3 +242,29 @@ def add_vote(request):
                 'result': 'failed',
                 'msg': '',
             }, status = 400)
+
+@login_required
+def remove_vote(request):
+    if(request.method == "POST"):
+        complaints = Complaint.objects.filter(id=int(request.POST.get('id')[0]))
+
+        if (len(complaints) == 0):
+            return JsonResponse({
+                'result': 'failed',
+                'msg': 'Post doesn\'t exits',
+            }, status = 400)
+
+        votes = Vote.objects.filter(complaint=complaints.first(), voter=request.user)
+        if len(votes) == 1:
+            vote = votes.first()
+            vote.delete()
+
+            return JsonResponse({
+                'result':'success',
+                'msg': 'Vote deleted'
+            })
+
+    return JsonResponse({
+                'result': 'failed',
+                'msg': '',
+            }, status = 400)

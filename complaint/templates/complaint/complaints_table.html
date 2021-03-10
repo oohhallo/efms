@@ -62,19 +62,29 @@
     </div>
     <div class="allactions">
     <div class="complaint_likes">
-      <form id="form_{{complaint.id}}"  method="post" action="{% url 'vote' %}"" onsubmit="return submitForm(this);">
+      <form id="form_{{complaint.id}}"  method="post" action="
+      {% if request.user|voted:complaint.id %}
+        {% url 'remove_vote' %}
+      {% else %}
+        {% url 'vote' %}
+      {% endif %}
+      " onsubmit="return submitForm(this);">
         {% csrf_token %}
         <input type="hidden" value="1"   name="vote" />
         <input type="hidden" value="{{complaint.id}}" name="id" />
-        <button style="background-color: transparent;color: black"type="submit">
+        <button style="background-color: transparent;color: black" class="like_submit_btn" type="submit">
             <i
             id="likebutton"
-            class="fa fa-thumbs-o-up"
+            class="fa fa-thumbs-o-up 
+            {% if request.user|voted:complaint.id %}
+            fa-thumbs-up
+            {% endif %}
+            "
             aria-hidden="true"
             >
             <a href="#"></a>
           </i>
-          <span>{{complaint|vote_count:1}}</span>
+          <span class="like_count">{{complaint|vote_count:1}}</span>
         </button>
       </form>
       
@@ -114,29 +124,35 @@
 {% endif %}
 <script type="text/javascript">
   function changeicon(x) {
-
     x.classList.toggle("fa-thumbs-up");
   }
 
   function submitForm(oFormElement)
   {
-  
     var likebutton=oFormElement.querySelector("#likebutton");
-      console.log(likebutton)
-  var xhr = new XMLHttpRequest();
-console.log(xhr.status)
-  console.log(xhr.responseText)
-  xhr.onload = function(){
-    if (xhr.responseText.result === "success"){
-      changeicon(likebutton);
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function(){
+      if (xhr.statusText === "OK"){
+        let to_do = oFormElement.getAttribute('action');
+        if (to_do === "/remove_vote") {
+          oFormElement.setAttribute('action', '/vote');
+          let like_count = oFormElement.querySelector(".like_count");
+          console.log(like_count.innerText)
+          like_count.innerText = parseInt(like_count.innerText, 10) - 1;
+        } else {
+          oFormElement.setAttribute('action', '/remove_vote');
+          let like_count = oFormElement.querySelector(".like_count");
+          like_count.innerText = parseInt(like_count.innerText, 10) + 1;
+        }
+        changeicon(likebutton);
+      }
     }
-  } // success case
-  xhr.onerror = function(){ alert (xhr.responseText); } // failure case
-  xhr.open (oFormElement.method, oFormElement.action, true);
-  xhr.send (new FormData (oFormElement));
-  return false;
-}
-
+    xhr.onerror = function(){ alert (xhr.responseText); } // failure case
+    xhr.open (oFormElement.method, oFormElement.action, true);
+    xhr.send (new FormData (oFormElement));
+    return false;
+  }
+  
   function sorttable(n) {
     if (n === 0) {
       window.location.reload();
