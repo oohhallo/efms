@@ -19,13 +19,17 @@
   font-size: 4rem;
 }
 
+.allactions {
+  display: flex;
+  justify-content: space-between;
+}
 .complaint_image {
   align-items: center;
-  max-width: 100%px;
+  max-width: 100%;
 }
 .complaint_image img {
-  max-width: 10%;
-  max-height: 10%;
+  max-width: 100%;
+  max-height: 100%;
 }
 .complaint_id {
   display: flex;
@@ -50,14 +54,15 @@
 }
 
 .complaint_likes {
-  position: absolute;
-  bottom: 15px;
-  left: 15px;
+  position: relative;
   font-size: 2rem;
 }
 
 .complaint_likes i {
   font-size: 4rem;
+}
+.complaint_likes button {
+  width: auto;
 }
 .complaint_likes i :hover {
   cursor: pointer;

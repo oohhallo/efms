@@ -60,12 +60,13 @@
       />
       {% endif %}
     </div>
+    <div class="allactions">
     <div class="complaint_likes">
       <form method="post" action="{% url 'vote' %}"" onsubmit="return submitForm(this);">
         {% csrf_token %}
         <input type="hidden" value="1"   name="vote" />
         <input type="hidden" value="{{complaint.id}}" name="id" />
-        <button type="submit">
+        <button style="background-color: transparent;color: black"type="submit">
             <i
             id="likebutton"
             class="fa fa-thumbs-o-up"
@@ -73,9 +74,10 @@
             >
             <a href="#"></a>
           </i>
+          <span>{{complaint|vote_count:1}}</span>
         </button>
       </form>
-      {{complaint|vote_count:1}}
+      
     </div>
     <div class="complaint_actions">
       <a href="{% url 'view_complaint' complaint.id %}"
@@ -97,6 +99,7 @@
         ><button type="button" class="btn btn-danger">Delete</button></a
       >
     </div>
+    </div>
   </div>
   {% endfor %} {% if show_back_btn %}
   <form
@@ -117,14 +120,16 @@
 
   function submitForm(oFormElement)
   {
+    var likebutton=document.getElementById("likebutton");
+      console.log(likebutton)
   var xhr = new XMLHttpRequest();
   xhr.onload = function(){
-    if (xhr.responseText.result === "success")
-      changeicon(document.getElementById("likebutton"));
+    if (xhr.responseText.result === "success"){
+      changeicon(likebutton);
+    }
   } // success case
   xhr.onerror = function(){ alert (xhr.responseText); } // failure case
   xhr.open (oFormElement.method, oFormElement.action, true);
-  console.log(oFormElement)
   xhr.send (new FormData (oFormElement));
   return false;
 }
