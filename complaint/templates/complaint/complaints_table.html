@@ -1,4 +1,5 @@
 {% extends 'complaint/base.html' %} {% block content %} <br /><br /><br />
+{% load custom_tags %}
 
 {% if zero_complaints %}
 <p>Uh-oh! There are no complaints!you can register your complaint here!</p>
@@ -57,15 +58,21 @@
       {% endif %}
     </div>
     <div class="complaint_likes">
-      <i
-        id="likebutton"
-        onclick="changeicon(this)"
-        class="fa fa-thumbs-o-up"
-        aria-hidden="true"
-      >
-        <a href="#"></a>
-      </i>
-      {{complaint.likes}}00000
+      <form method="post" action="{% url 'vote' %}"" onsubmit="return submitForm(this);">
+        {% csrf_token %}
+        <input type="hidden" value="1"   name="vote" />
+        <input type="hidden" value="{{complaint.id}}" name="id" />
+        <button type="submit">
+            <i
+            id="likebutton"
+            class="fa fa-thumbs-o-up"
+            aria-hidden="true"
+            >
+            <a href="#"></a>
+          </i>
+        </button>
+      </form>
+      {{complaint|vote_count:1}}
     </div>
     <div class="complaint_actions">
       <a href="{% url 'view_complaint' complaint.id %}"
@@ -101,8 +108,23 @@
 {% endif %}
 <script type="text/javascript">
   function changeicon(x) {
+
     x.classList.toggle("fa-thumbs-up");
   }
+
+  function submitForm(oFormElement)
+  {
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function(){
+    if (xhr.responseText.result === "success")
+      changeicon(document.getElementById("likebutton"));
+  } // success case
+  xhr.onerror = function(){ alert (xhr.responseText); } // failure case
+  xhr.open (oFormElement.method, oFormElement.action, true);
+  console.log(oFormElement)
+  xhr.send (new FormData (oFormElement));
+  return false;
+}
 
   function sorttable(n) {
     if (n === 0) {
@@ -175,25 +197,12 @@
     });
   }
 </script>
+<script>
+
+</script>
 {% endblock %} {% if request.user.profile.is_admin %} {% block footer %}
 
-<script>
-  function submitForm(oFormElement)
-  {
-  var xhr = new XMLHttpRequest();
-  xhr.onload = function(){ alert (xhr.responseText); } // success case
-  xhr.onerror = function(){ alert (xhr.responseText); } // failure case
-  xhr.open (oFormElement.method, oFormElement.action, true);
-  console.log(oFormElement)
-  xhr.send (new FormData (oFormElement));
-  return false;
-}
-</script>
-{% endblock %}
-
-{% if request.user.profile.is_admin %}
-{% block footer %}
 <div class="footer-adm">
-  <p>&copy;Copyrights Dinesh, Sahiti, Sai Kumar.</p>
+  <p>&copy;Copyrights Dinesh, Chaitanya, Sai Kumar.</p>
 </div>
 {% endblock %} {% endif %}

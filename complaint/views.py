@@ -231,6 +231,7 @@ def add_vote(request):
 
         if len(Vote.objects.filter(complaint=complaints.first(), voter=request.user)) == 0:
             vote = Vote(complaint=complaints.first(), vote=vote_res, voter=request.user)
+            vote.save()
 
         return JsonResponse({
             'result':'success',
