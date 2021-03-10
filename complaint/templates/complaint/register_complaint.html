@@ -265,14 +265,15 @@ h3{
     <label for="typ"><b>Type of complaint:</b></label>
   <select id="comp" name="category">
     <option value="academic">Academics</option>
+    <!--
     <option value="mess">Mess</option>
     <option value="sports">Sports</option>
     <option value="student_affairs">Student affairs</option>
     <option value="hostel">Hostel</option>
     <option value="security">Security</option>
-    <option value="guest_house">Guest House</option>
+    <option value="guest_house">Guest House</option> -->
     <option value="library">Library</option>
-    <option value="other">Other</option>
+   <!-- <option value="other">Other</option> -->
   </select>
   <br></br>
 <label for="myCheck">Choose branch:</label> 
@@ -302,7 +303,7 @@ h3{
  
 {% endif %}
 <br>
-<label for="id_photo">Photo:</label> <input type="file" name="photo" accept="image/*" id="id_photo">
+<label for="id_photo">Photo:</label> <input type="file" name="photo" accept="image" id="id_photo">
 <br></br>
 {% if invalid_form %}<p>Invalid form. Try again!</p>{% endif %}
 {% if edit %}

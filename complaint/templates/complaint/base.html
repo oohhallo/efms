@@ -29,6 +29,23 @@
     {% block css %}
     <link rel="stylesheet" href="{% static 'css/admin.css' %}" />
     {% endblock %}
+
+    <style>
+      #footer1 {
+      position: fixed;
+      height: 50px;
+      background-color: black;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      margin-bottom: 0px;
+      color: white;
+      font-weight: bold;
+    }
+    #flabel{
+      padding-top: 10px;;
+    }
+    </style>
   </head>
 
   <body>
@@ -60,7 +77,7 @@
 
     {% block content %} {% endblock %} {% block footer %}
     <div class="footer">
-      <p>&copy;Copyrights Dinesh, Sahiti, Sai Kumar.</p>
+      <p id='footer1'><label id='flabel'>&copy;Copyrights Dinesh, chaitanya, Sai Kumar.</label></p>
     </div>
     {% endblock %}
   </body>
