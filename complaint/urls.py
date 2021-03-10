@@ -6,6 +6,7 @@ urlpatterns = [
     path('vote', views.add_vote, name='vote'),
     path('remove_vote', views.remove_vote, name='remove_vote'),
     path('login', views.login_view, name='login'),
+    path('', views.login_view, name='login'),
     path('logged-out', views.logging_out_view, name='logout'),
     path('signup', views.sign_up_view, name='signup'),
     path('complaint/<int:id>', views.view_complaint_byid, name='view_complaint'),
