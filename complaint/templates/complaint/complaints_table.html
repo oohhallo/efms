@@ -5,10 +5,10 @@
 <p>Uh-oh! There are no complaints!you can register your complaint here!</p>
 <a href="{% url 'register_complaint'">Register Here</a>
 {% else %}
-<h3>{% if is_admin %} Complaints {% else %} Your Complaints {% endif %}</h3>
+<h3>{% if is_admin or all_complaints %} Complaints {% else %} Your Complaints {% endif %}</h3>
 
 <div class="all_complaints">
-  {% if is_admin %} {% else %}
+  {% if is_admin or all_complaints%} {% else %}
   <div id="complaint_counts">
     <label><b>Total Registerd:</b></label>
     <input
@@ -137,7 +137,6 @@
         if (to_do === "/remove_vote") {
           oFormElement.setAttribute('action', '/vote');
           let like_count = oFormElement.querySelector(".like_count");
-          console.log(like_count.innerText)
           like_count.innerText = parseInt(like_count.innerText, 10) - 1;
         } else {
           oFormElement.setAttribute('action', '/remove_vote');

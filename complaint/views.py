@@ -48,6 +48,21 @@ def user_view_complaints(request):
                  'home_header':'active', 'view_url': reverse('user_complaints_view')})
 
 @login_required(login_url='login')
+def all_complaints_view(request):
+    complaints = Complaint.objects.filter().order_by('created_date')
+    
+    filter_by = request.GET.get('filter_by_category')
+    if filter_by in [i[0] for i in CATEGORY_CHOICES]:
+        complaints=Complaint.objects.filter(category=filter_by)
+    
+    return render(request, 'complaint/complaints_table.html', context={
+                  'complaints': complaints,
+                  'all_complaints': True,
+                  'all_complaints_header': 'active'
+                  })
+
+
+@login_required(login_url='login')
 def logging_out_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('login'))

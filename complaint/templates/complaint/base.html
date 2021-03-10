@@ -51,7 +51,7 @@
       <a href="{% url 'user_complaints_view' %}" class="{{ home_header }}"
         ><i class="bi bi-inbox-fill"></i> My Complaints</a
       >
-      <a href="#" class="{{ common_home_header }}"
+      <a href="{% url 'all_complaints_view' %}" class="{{ all_complaints_header }}"
         ><i class="bi bi-inboxes-fill"></i> all Complaints</a
       >
       <span class="welcome-txt">Welcome {{ request.user.username }}!!</span>
