@@ -164,6 +164,7 @@ h3 {
 }
 button {
   color: white;
+  background-color: #1e5e77;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
@@ -210,8 +211,8 @@ button:hover {
   color: white;
   font-weight: bold;
 }
-#flabel{
-  padding-top: 10px;;
+#flabel {
+  padding-top: 10px;
 }
 
 .footer-adm {

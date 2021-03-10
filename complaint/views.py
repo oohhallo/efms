@@ -49,7 +49,7 @@ def user_view_complaints(request):
 
 @login_required(login_url='login')
 def all_complaints_view(request):
-    complaints = Complaint.objects.filter().order_by('created_date')
+    complaints = Complaint.objects.filter().order_by('-created_date')
     
     filter_by = request.GET.get('filter_by_category')
     if filter_by in [i[0] for i in CATEGORY_CHOICES]:
@@ -228,7 +228,9 @@ def edit_complaint_byid(request, id):
 @login_required
 def add_vote(request):
     if(request.method == "POST"):
-        complaints = Complaint.objects.filter(id=int(request.POST.get('id')[0]))
+        complaints = Complaint.objects.filter(id=int(request.POST.get('id')))
+        print(int(request.POST.get('id')))
+
 
         if (len(complaints) == 0):
             return JsonResponse({
@@ -236,7 +238,7 @@ def add_vote(request):
                 'msg': 'Post doesn\'t exits',
             }, status = 400)
         
-        vote_res = int(request.POST.get('vote')[0])
+        vote_res = int(request.POST.get('vote'))
 
         if vote_res not in (-1, 1):
             return JsonResponse({
@@ -261,7 +263,7 @@ def add_vote(request):
 @login_required
 def remove_vote(request):
     if(request.method == "POST"):
-        complaints = Complaint.objects.filter(id=int(request.POST.get('id')[0]))
+        complaints = Complaint.objects.filter(id=int(request.POST.get('id')))
 
         if (len(complaints) == 0):
             return JsonResponse({

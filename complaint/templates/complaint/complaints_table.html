@@ -31,7 +31,10 @@
       style="border: none"
       readonly
     />
-    <div class="dropdown">
+    
+  </div>
+  {% endif %}
+  <div class="dropdown">
       <button class="dropbtn">Sort By</button>
       <div class="dropdown-content">
         <a href="#" onclick="sorttable(0)">ID</a>
@@ -42,8 +45,6 @@
         <a href="#" onclick="sorttable(5)"></a>
       </div>
     </div>
-  </div>
-  {% endif %}
   <br />
   {% for complaint in complaints %}
   <div class="complaint_box">

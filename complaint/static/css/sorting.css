@@ -1,6 +1,6 @@
 /* Style The Dropdown Button */
 .dropbtn {
-  background-color: #1e5e77;
+  background-color: #1e5e77 !important;
   color: white;
   padding: 16px;
   font-size: 16px;
