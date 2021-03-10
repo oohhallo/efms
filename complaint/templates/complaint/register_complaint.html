@@ -298,10 +298,10 @@ h3{
 <label for="des">Description :</label><br></br>
 {% if edit %}
  <input type="text" name="title" placeholder="enter subject" value={{ complaint.title }} required><br><br>
- <textarea id="ta" cols="45" rows="3" placeholder="describe.."  >{{ complaint.description }}</textarea>
+ <textarea id="ta" cols="45" rows="3" placeholder="describe.."  style="resize: none;">{{ complaint.description }}</textarea>
  {% else %}
  <input type="text" name="title" placeholder="enter subject" required><br><br>
- <textarea id="ta" cols="45" rows="3" placeholder="describe.." name="description"></textarea>
+ <textarea id="ta" cols="45" rows="3" placeholder="describe.." name="description" style="resize: none;"></textarea>
  
 {% endif %}
 <br>
