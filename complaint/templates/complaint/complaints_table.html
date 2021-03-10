@@ -62,7 +62,7 @@
     </div>
     <div class="allactions">
     <div class="complaint_likes">
-      <form method="post" action="{% url 'vote' %}"" onsubmit="return submitForm(this);">
+      <form id="form_{{complaint.id}}"  method="post" action="{% url 'vote' %}"" onsubmit="return submitForm(this);">
         {% csrf_token %}
         <input type="hidden" value="1"   name="vote" />
         <input type="hidden" value="{{complaint.id}}" name="id" />
@@ -120,9 +120,12 @@
 
   function submitForm(oFormElement)
   {
-    var likebutton=document.getElementById("likebutton");
+  
+    var likebutton=oFormElement.querySelector("#likebutton");
       console.log(likebutton)
   var xhr = new XMLHttpRequest();
+console.log(xhr.status)
+  console.log(xhr.responseText)
   xhr.onload = function(){
     if (xhr.responseText.result === "success"){
       changeicon(likebutton);
