@@ -78,12 +78,12 @@ def view_complaint_byid(request, id):
         remark = request.POST.get('remark')
         complaint.status = status
         complaint.save()
-        complaint_url = request.build_absolute_uri(reverse('view_complaint',kwargs={'id':complaint.id}))
-        email_subject = 'Your complaint at cts NIT Andhra got a remark.'
-        email_content = f'Hi {complaint.author},\n Your complaint got the following remark\n'
-        email_content += remark + '\nclick the following link to view you complaint in cts' + complaint_url
-        email_recipient = complaint.author.email
-        send_mail(email_subject, email_content, EMAIL_HOST_USER, [email_recipient], fail_silently=False)
+        # complaint_url = request.build_absolute_uri(reverse('view_complaint',kwargs={'id':complaint.id}))
+        # email_subject = 'Your complaint at cts NIT Andhra got a remark.'
+        # email_content = f'Hi {complaint.author},\n Your complaint got the following remark\n'
+        # email_content += remark + '\nclick the following link to view you complaint in cts' + complaint_url
+        # email_recipient = complaint.author.email
+        # send_mail(email_subject, email_content, EMAIL_HOST_USER, [email_recipient], fail_silently=False)
         Remark.objects.create(text=remark, complaint=complaint,
                                author=request.user)
         
@@ -177,11 +177,11 @@ def register_complaint_page(request):
             complaint = form.save(commit=False)
             complaint.author = request.user
             complaint.photo = form.cleaned_data['photo']
-            mail_subject = f'cts: {complaint.title}'
-            recipient_profiles = Profile.objects.filter(head_of=complaint.category)
-            recipient_emails = []
-            for user_profile in recipient_profiles:
-                recipient_emails += [user_profile.user.email]
+            # mail_subject = f'cts: {complaint.title}'
+            # recipient_profiles = Profile.objects.filter(head_of=complaint.category)
+            # recipient_emails = []
+            # for user_profile in recipient_profiles:
+            #     recipient_emails += [user_profile.user.email]
             branch = request.POST.get('branch')
             complaint.category += f' [{branch}]'
             #complaint.photo.save(name=request.POST.get("title")+".png", content="jhkj")
@@ -194,9 +194,9 @@ def register_complaint_page(request):
                              "register_header": 'active'})
             else:
                 complaint.save()
-                complaint_url = request.build_absolute_uri(reverse('view_complaint',kwargs={'id':complaint.id}))
-                mail_content = f'New complaint is registered by {complaint.author}. click the following link to go to complaint.\n {complaint_url}'
-                send_mail(mail_subject, mail_content, EMAIL_HOST_USER,recipient_emails, fail_silently=False)
+                # complaint_url = request.build_absolute_uri(reverse('view_complaint',kwargs={'id':complaint.id}))
+                # mail_content = f'New complaint is registered by {complaint.author}. click the following link to go to complaint.\n {complaint_url}'
+                # send_mail(mail_subject, mail_content, EMAIL_HOST_USER,recipient_emails, fail_silently=False)
                 return render(request, 'complaint/register_complaint.html',
                    context={"form_saved": True,
                              "register_header": 'active'})
