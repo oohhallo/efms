@@ -7,7 +7,7 @@ class RegisterComplaintForm(forms.ModelForm):
                              required=False,)
     class Meta:
         model = Complaint
-        fields = ('title', 'description', 'category', 'photo')
+        fields = ('title', 'description', 'category', 'photo', 'branch')
 
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=False)

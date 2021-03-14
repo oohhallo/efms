@@ -16,6 +16,26 @@ CATEGORY_CHOICES = [
     ('library', 'Library'),
     ('other', 'Other'),
 ]
+
+BRANCH_CHOICES = [
+    ('cse','cse'),
+    ('ece','ece'),
+    ('eee','eee'),
+    ('civil','civil'),
+    ('mech','mech'),
+    ('mme','mme'),
+    ('chemical','chemical'),
+    ('biotech','biotech'),
+    ('none', 'none')
+]
+
+STATUS_CHOICES = [
+    ('reported', 'Reported'),
+    ('in_progress', 'In Progress'),
+    ('completed', 'Completed'),
+    ('closed', 'Closed')
+]
+
 class Complaint(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=400)
@@ -23,13 +43,8 @@ class Complaint(models.Model):
     id = models.AutoField(primary_key=True)
     is_anonymous= models.BooleanField(default=False)
     photo = models.ImageField(null=True, default=None,)
+    branch = models.CharField(max_length=10, choices=BRANCH_CHOICES, default='none')
     
-    STATUS_CHOICES = [
-        ('reported', 'Reported'),
-        ('in_progress', 'In Progress'),
-        ('comlpeted', 'Completed'),
-        ('closed', 'Closed')
-    ]
     status = models.CharField(
         max_length=15,
         choices=STATUS_CHOICES,

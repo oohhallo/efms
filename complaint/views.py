@@ -1,5 +1,9 @@
 from django.shortcuts import render
-from .models import Complaint, Remark, CATEGORY_CHOICES, Profile, Vote
+from .models import (
+    Complaint, Remark, BRANCH_CHOICES,
+    CATEGORY_CHOICES, STATUS_CHOICES,
+    Profile, Vote,
+)
 from django.utils import timezone
 from django.contrib.auth import authenticate, login,logout
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
@@ -51,9 +55,17 @@ def user_view_complaints(request):
 def all_complaints_view(request):
     complaints = Complaint.objects.filter().order_by('-created_date')
     
-    filter_by = request.GET.get('filter_by_category')
+    filter_by = request.GET.get('category')
     if filter_by in [i[0] for i in CATEGORY_CHOICES]:
-        complaints=Complaint.objects.filter(category=filter_by)
+        complaints=complaints.filter(category=filter_by)
+
+    branch = request.GET.get('branch')
+    if branch in [i[0] for i in BRANCH_CHOICES]:
+        complaints = complaints.filter(branch=branch)
+
+    status = request.GET.get('status')
+    if status in [i[0] for i in STATUS_CHOICES]:
+        complaints = complaints.filter(status=status)
 
     is_admin = request.user.profile.is_admin
     
@@ -91,7 +103,7 @@ def view_complaint_byid(request, id):
     remarks = Remark.objects.filter(complaint=complaint)
     return render(request, 'complaint/view_complaint.html',
                   {'complaint': complaint, "remarks": remarks,
-                   'status_choices': Complaint.STATUS_CHOICES})
+                   'status_choices': STATUS_CHOICES})
 
 def delete_complaint_byid(request, cmp_id):
     # This should be done using a post request. time issues
@@ -182,8 +194,6 @@ def register_complaint_page(request):
             # recipient_emails = []
             # for user_profile in recipient_profiles:
             #     recipient_emails += [user_profile.user.email]
-            branch = request.POST.get('branch')
-            complaint.category += f' [{branch}]'
             #complaint.photo.save(name=request.POST.get("title")+".png", content="jhkj")
             #complaint.photo.name = str(complaint.id) + ".png"
             if is_anonymous :
