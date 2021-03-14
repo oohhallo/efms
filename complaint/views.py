@@ -54,11 +54,14 @@ def all_complaints_view(request):
     filter_by = request.GET.get('filter_by_category')
     if filter_by in [i[0] for i in CATEGORY_CHOICES]:
         complaints=Complaint.objects.filter(category=filter_by)
+
+    is_admin = request.user.profile.is_admin
     
     return render(request, 'complaint/complaints_table.html', context={
                   'complaints': complaints,
                   'all_complaints': True,
-                  'all_complaints_header': 'active'
+                  'all_complaints_header': 'active',
+                  'is_admin':is_admin,
                   })
 
 

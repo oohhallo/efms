@@ -8,8 +8,8 @@
 <h3>{% if is_admin or all_complaints %} Complaints {% else %} Your Complaints {% endif %}</h3>
 
 <div class="all_complaints">
-  {% if is_admin or all_complaints%} {% else %}
   <div id="complaint_counts">
+    {% if is_admin or not all_complaints%} {% else %}
     <label><b>Total Registerd:</b></label>
     <input
       type="text"
@@ -30,11 +30,9 @@
       value="{{ total_closed }}"
       style="border: none"
       readonly
-    />
-    
-  </div>
-  {% endif %}
-  <div class="dropdown">
+      />
+      {% endif %}
+    <div class="dropdown">
       <button class="dropbtn">Sort By</button>
       <div class="dropdown-content">
         <a href="#" onclick="sorttable(0)">ID</a>
@@ -45,6 +43,7 @@
         <a href="#" onclick="sorttable(5)"></a>
       </div>
     </div>
+  </div>
   <br />
   {% for complaint in complaints %}
   <div class="complaint_box">

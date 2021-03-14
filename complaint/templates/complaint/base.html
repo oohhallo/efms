@@ -56,23 +56,22 @@
       >
 
       {% if request.user.profile.is_admin %}
-      <a href="{% url 'admin_complaints_view' %}" class="{{ home_header }}"
-        ><i class="bi bi-inbox-fill"></i> My Complaints</a
+      <a href="{% url 'all_complaints_view' %}" class="{{ home_header }}"
+        ><i class="bi bi-inbox-fill"></i> All Complaints</a
       >
-      <span class="welcome-txt">Welcome Admin!!</span>
       {% else %}
       <a href="{% url 'register_complaint' %}" class="{{ register_header }}"
         ><i class="fa fa-fw fa-envelope"></i> Register</a
-      >
-
-      <a href="{% url 'user_complaints_view' %}" class="{{ home_header }}"
+        >
+        
+        <a href="{% url 'user_complaints_view' %}" class="{{ home_header }}"
         ><i class="bi bi-inbox-fill"></i> My Complaints</a
-      >
-      <a href="{% url 'all_complaints_view' %}" class="{{ all_complaints_header }}"
+        >
+        <a href="{% url 'all_complaints_view' %}" class="{{ all_complaints_header }}"
         ><i class="bi bi-inboxes-fill"></i> all Complaints</a
-      >
+        >
+        {% endif %}
       <span class="welcome-txt">Welcome {{ request.user.username }}!!</span>
-      {% endif %}
     </div>
 
     {% block content %} {% endblock %} {% block footer %}
