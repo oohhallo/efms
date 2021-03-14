@@ -193,11 +193,9 @@ button:hover {
 }
 
 .footer {
-  position: absolute;
-  left: 0;
-  bottom: 0;
+  height: 40px;
+  width: 100%;
   text-align: center;
-  margin: 0% 40%;
   color: black;
 }
 #footer1 {
@@ -250,12 +248,7 @@ textarea {
   border: none;
   resize: none;
 }
-#print-btn {
-  font-size: 22px;
-  width: 15%;
-  margin-left: -14%;
-  margin-top: 1%;
-}
+
 
 .update-button {
   font-size: 22px;
@@ -268,13 +261,6 @@ input {
   font-size: medium;
   font-family: sans-serif;
   border: none;
-}
-.co {
-  font-size: 20px;
-  float: left;
-  width: 50%;
-  padding-left: 5%;
-  padding-top: 2%;
 }
 .right {
   font-size: 20px;
@@ -294,4 +280,68 @@ input[type="text"] {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+}
+
+
+/*
+  part of view_complaint.html css
+*/
+#label_view{
+  color:red;
+}
+#print_div{
+  text-align: center;
+
+}
+#print-btn {
+  padding: 2px;
+  font-size: 22px;
+  width: 100px;
+  height: fit-content;
+  background-color: #1e5e77;
+  font-family: 'Robot',sans-serif;
+  border-radius: 5px;
+  bottom: 0px;
+}
+#print-btn:hover{
+  background-color: rgb(0, 0, 0);
+}
+.container_view {
+  display: flex;
+  flex-direction: row;
+  margin:20px;
+  height:500px;
+  height: 400px;
+  box-sizing: border-box;
+  background: white;
+  box-shadow: 1px 10px 40px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+}
+.left_flex{
+  padding-left: 13px;
+  padding-top:8px;
+  flex: 40%;
+}
+.right_flex{
+  margin-top: 10px;
+  flex: 40%;
+}
+@media (max-width: 100%) {
+  .container_view {
+    flex-direction: row;
+  }
+}
+#dt{
+  width:258px;
+  height: 20px;
+}
+
+.comments{
+  margin:20px;
+  padding-left: 10px;
+  height: fit-content;
+  box-sizing: border-box;
+  background: white;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
 }

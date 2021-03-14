@@ -1,73 +1,97 @@
 {% extends 'complaint/base.html' %}
 {% block title %} {{ complaint.title }} {% endblock %}
 {% block content %}
-<div class="container1" id="print">
-	<div class="formbox2">
-	<form >
-		<div class="co">
+<div class="container_view" id="print">
+	<div class="left_flex">
 			
 {% if complaint.is_anonymous == True %}
 <p>This is anonymous</p>
 {% else %}
-<p>Username: {{ request.user.username }}</p>
-<p>user email: {{ request.user.email }}</p>
+<label id="label_view">Username:</label>
+	<input type="text" name="" value= {{ request.user.username }} readonly>
+<br>
+<label id="label_view">user email:</label>
+	<input type="text" name="" value= {{ request.user.email }} readonly>
 {% endif %}
-			
+	<!--
+		form for a user to view
+	-->	
 	<form class="db">
 	
 	
-		<label for="title"><b>Complaint Subject: </b></label>
+		<label id="label_view" for="title"><b>Complaint Subject: </b></label>
 		<input type="text" name="" value= {{complaint.title }} readonly><br></br>
-		<label id="l" for="type">Related to:</label>
+		<label id="label_view" id="l" for="type">Related to:</label>
 		<input type="text" name="" value={{complaint.category }} readonly><br></br>
 		<!--<input type="text" name="" readonly><br></br>-->
-		<!--	<label id="l" for="subject">Complaint Subject:</label><br></br> -->
-		<label id="l" for="description"> Description:</label><br></br>
-		 <textarea id="ta" cols="50" rows="5" placeholder="describe.." style="width: 414px; height: 92px;" readonly>{{complaint.description}}</textarea><br></br><br>
-		</div>
-		<div class="right">
-		<label id="l" for="datetime">Date of Submit:</label>
-		<textarea  cols="30" rows="2" style="width: 271px; height: 17px;" readonly>{{complaint.created_date }}</textarea><br></br>
-		<label id="l" for="stat">Status:</label>
-		<input type="text" name="" value={{complaint.status}}><br><br/>
-		
-		
-		
+		<!--<label id="label_view" id="l" for="subject">Complaint Subject:</label><br></br> -->
+		<label id="label_view" id="l" for="description"> Description:</label><br></br>
+		<textarea id="ta" cols="50" rows="5" placeholder="describe.." style="width: 414px; height: 92px;" readonly>{{complaint.description}}</textarea><br></br><br>
+	</div>
+
+	<div class="right_flex">
+			<label id="label_view" id="l" for="datetime">Date of Submit:</label>
+			<textarea id='dt' readonly>{{complaint.created_date }}</textarea><br></br>
+			<label id="label_view" id="l" for="stat">Status:</label>
+			<input type="text" style="background-color:yellow;text-align: center;" name="" value={{complaint.status}}><br><br/>		
+		<!--
+			if there is a image place it
+		-->
 		{% if complaint.photo %}
-			<img src="{{ complaint.photo.url }}">
+		<label id="label_view">Image:</label><br>
+			<img style="height: 30%;position: absolute;height: 180px;" src="{{ complaint.photo.url }}">
+		{% else %}
+		<label id="label_view">Image:</label>
+		<input type="text" value="None" readonly>
 		{% endif %}
 		{% for remark in remarks %}
-			<label for="remarks">Remarks:</label><br>
+			<label id="label_view" for="remarks">Remarks:</label><br>
 			<textarea class="hide-remarks-border" id="ta" cols="50" rows="6" >{{ remark.text }}</textarea>
 			<p>date: {{ remark.date }}</p>
 		{% endfor %}
-	<br><br><br>
 	</form>
+
+<!--
+	if user is an admin then use this
+-->
 {% if request.user.profile.is_admin %}
-<form class="db" method="post" action="{% url 'view_complaint' complaint.id %}">
-	{% csrf_token %}
-	<label for="status">Status</label>
-	<select name="status">
-		{% for status in status_choices %}
-		<option value="{{ status.0 }}"
-		{% ifequal status.0 complaint.status %} selected{% endifequal %}>
-		{{ status.1 }}</option>
-		{% endfor %}
-	</select><br><br/>
-	<label for="remarks">Remarks:</label><br>
-	<textarea id="ta" cols="50" rows="6" name=remark></textarea>
-	<button class="update-button" type="submit" style="width: 290.84; height :54 ;" value="submit">Update</button>
-</form>
-	</div>
+	<form class="db" method="post" action="{% url 'view_complaint' complaint.id %}">
+		{% csrf_token %}
+		<label id="label_view" for="status">Status</label>
+		<select name="status">
+			{% for status in status_choices %}
+			<option value="{{ status.0 }}"
+			{% ifequal status.0 complaint.status %} selected{% endifequal %}>
+			{{ status.1 }}</option>
+			{% endfor %}
+		</select><br><br/>
+		<label id="label_view" for="remarks">Remarks:</label><br>
+		<textarea id="ta" cols="50" rows="6" name=remark></textarea>
+		<button class="update-button" type="submit" style="width: 290.84; height :54 ;" value="submit">Update</button>
+	</form>
 {% endif %}
-<div>
-	<button onclick="printDiv('print')" class="example-screen" id="print-btn">Print</button>
-</div>
-</div>
-</div>
+<!--
+	till here for admin
+-->
+	<div id="print_div">
+		<button onclick="printDiv('print')" class="example-screen" id="print-btn">Print</button>
+	</div>
 </div>
 </div>
 
+<label style="font-family: sans-serif;font-size: 25px;text-align: center;"><u>Comments :</u></label><br>
+
+<div class="comments">
+	<label id="label_cmnt_usr" style="color: darkmagenta;"><u>user name</u></label><br>
+	<label id="label_cmnt_txt" style="overflow: visible;font-weight: normal;">user comments</label><br>
+	<label id="label_cmnt_time" style="color: crimson;">commented time</label>
+</div>
+<div class="comments" style="height: 40px;">
+<input type="text" value="" style="width: 90%;border: none;" placeholder="Add comment">
+<input type="button" value="Add" style="background-color: blue;color: white;border-radius: 5px;margin-top: 10px;">
+</div>
+
+<label style="text-align: center;color:black;width:100%;padding-bottom: 40px;">---thats all---</label>
 <script>
 	function printDiv(print) {
      var printContents = document.getElementById("print").innerHTML;
