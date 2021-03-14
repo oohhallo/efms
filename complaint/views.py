@@ -87,22 +87,23 @@ def view_complaint_byid(request, id):
     complaint = Complaint.objects.filter(id=id)[0]
     if request.method == "POST":
         status = request.POST.get('status')
-        remark = request.POST.get('remark')
-        complaint.status = status
-        complaint.save()
+        comment = request.POST.get('comment')
+        if status is not None:
+            complaint.status = status
+            complaint.save()
         # complaint_url = request.build_absolute_uri(reverse('view_complaint',kwargs={'id':complaint.id}))
         # email_subject = 'Your complaint at cts NIT Andhra got a remark.'
         # email_content = f'Hi {complaint.author},\n Your complaint got the following remark\n'
         # email_content += remark + '\nclick the following link to view you complaint in cts' + complaint_url
         # email_recipient = complaint.author.email
         # send_mail(email_subject, email_content, EMAIL_HOST_USER, [email_recipient], fail_silently=False)
-        Remark.objects.create(text=remark, complaint=complaint,
+        Remark.objects.create(text=comment, complaint=complaint,
                                author=request.user)
         
 
     remarks = Remark.objects.filter(complaint=complaint)
     return render(request, 'complaint/view_complaint.html',
-                  {'complaint': complaint, "remarks": remarks,
+                  {'complaint': complaint, "comments": remarks,
                    'status_choices': STATUS_CHOICES})
 
 def delete_complaint_byid(request, cmp_id):
