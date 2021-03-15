@@ -34,7 +34,7 @@
 		
 		
 		{% if complaint.photo %}
-			<img src="{{ complaint.photo.url }}">
+			<img width="100%" src="{{ complaint.photo.url }}">
 		{% endif %}
 		{% for remark in remarks %}
 			<label for="remarks">Remarks:</label><br>
