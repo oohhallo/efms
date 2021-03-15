@@ -288,7 +288,7 @@ input[type="text"] {
   part of view_complaint.html css
 */
 #label_view{
-  color:red;
+  color:#1e5e77;
 }
 #print_div{
   text-align: center;
@@ -311,8 +311,7 @@ input[type="text"] {
   display: flex;
   flex-direction: row;
   margin:20px;
-  height:500px;
-  height: 400px;
+  height:auto;
   box-sizing: border-box;
   background: white;
   box-shadow: 1px 10px 40px rgba(0, 0, 0, 0.5);

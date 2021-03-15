@@ -32,13 +32,22 @@
 	<div class="right_flex">
 			<label id="label_view" id="l" for="datetime">Date of Submit:</label>
 			<textarea id='dt' readonly>{{complaint.created_date }}</textarea><br></br>
-			<label id="label_view" id="l" for="stat">Status:</label>
+			<label id="label_view" id="l" for="stat">Present status:</label>
 			<input type="text" style="background-color:yellow;text-align: center;" name="" value={{complaint.status}} readonly><br><br/>		
 		<!--
 			if there is a image place it
 		-->
 		{% if complaint.photo %}
-			<img  height="50%"src="{{ complaint.photo.url }}">
+		<div>
+		<label id="label_view">Image:</label><br>
+			<img style="height: 180px;" src="{{ complaint.photo.url }}">
+			<br>
+		</div>
+		{% else %}
+		
+		<label id="label_view">Image:</label>
+			<input type="text" value="None" readonly>
+		
 		{% endif %}
 		{% for remark in remarks %}
 			<label id="label_view" for="remarks">Remarks:</label><br>
@@ -51,10 +60,10 @@
 	if user is an admin then use this
 -->
 {% if request.user.profile.is_admin %}
-	<form class="db" method="post" action="{% url 'view_complaint' complaint.id %}">
+	<form class="db" style="padding-top: 10px;" method="post" action="{% url 'view_complaint' complaint.id %}">
 		{% csrf_token %}
-		<label id="label_view" for="status">Status</label>
-		<select name="status">
+		<label id="label_view" for="status">Status:</label>
+		<select name="status" >
 			{% for status in status_choices %}
 			<option value="{{ status.0 }}"
 			{% ifequal status.0 complaint.status %} selected{% endifequal %}>
@@ -62,25 +71,26 @@
 			{% endfor %}
 		</select><br><br/>
 		<div class="update_button">
-		<button class="update-button" type="submit" style="width: auto;" value="submit">Update</button>
+		<button class="update-button" id="print-btn" type="submit" style="width: auto;" value="submit">Update</button>
 		</div>
 	</form>
 {% endif %}
 <!--
 	till here for admin
--->
+
 	<div id="print_div">
-		<button onclick="printDiv('print')" class="example-screen" id="print-btn">Print</button>
+		<button onclick="printDiv('print')" style="float:right;margin-top: 200px;" class="example-screen" id="print-btn">Print</button>
 	</div>
+-->
 </div>
 </div>
 
 <label style="font-family: sans-serif;font-size: 25px;text-align: center;"><u>Comments :</u></label><br>
 {% for comment in comments %}
 <div class="comments">
-	<label id="label_cmnt_usr" style="color: darkmagenta;"><u>{{ comment.author.username}}</u></label><br>
+	<label id="label_cmnt_usr" style="color:blue ;"><u>@{{ comment.author.username}}</u></label><br>
 	<label id="label_cmnt_txt" style="overflow: visible;font-weight: normal;">{{ comment.text }}</label><br>
-	<label id="label_cmnt_time" style="color: crimson;">{{ comment.date }}</label>
+	<label id="label_cmnt_time" style="color: red;font-size: 10px;">Date:{{ comment.date }}</label>
 </div>
 {% endfor %}
 <div class="comments" style="height: 40px;">
