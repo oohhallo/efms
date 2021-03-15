@@ -103,23 +103,7 @@
       
     </div>
     <div class="complaint_actions">
-      {% if request.user.profile.is_admin %}
-<form class="db" method="post" action="{% url 'view_complaint' complaint.id %}">
-	{% csrf_token %}
-	<label for="status">Status</label>
-	<select name="status">
-		{% for status in status_choices %}
-		<option value="{{ status.0 }}"
-		{% ifequal status.0 complaint.status %} selected{% endifequal %}>
-		{{ status.1 }}</option>
-		{% endfor %}
-	</select><br><br/>
-	<label for="remarks">Remarks:</label><br>
-	<textarea id="ta" cols="50" rows="6" name=remark></textarea>
-	<button class="update-button" type="submit" style="width: 290.84; height :54 ;" value="submit">Update</button>
-</form>
-	</div>
-{% endif %}
+ 
       <a href="{% url 'view_complaint' complaint.id %}"
         ><button type="button" class="btn btn-info">View</button>
       </a>
