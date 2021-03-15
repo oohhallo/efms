@@ -9,50 +9,43 @@
 
 <div class="all_complaints">
   <div id="complaint_counts">
-    {% if is_admin or not all_complaints%} {% else %}
-    <label><b>Total Registerd:</b></label>
-    <input
-      type="text"
-      value="{{ complaint_count }}"
-      style="border: none"
-      readonly
-    />
-    <label><b>Total Pending:</b></label>
-    <input
-      type="text"
-      value="{{ total_pending }}"
-      style="border: none"
-      readonly
-    />
-    <label><b>Total Closed:</b></label>
-    <input
-      type="text"
-      value="{{ total_closed }}"
-      style="border: none"
-      readonly
-      />
-      {% endif %}
+    
     <div class="dropdown">
-      <button class="dropbtn">Filter By</button>
+      <button class="dropbtn">Filter By Branch</button>
       <div class="dropdown-content">
-        <form action="" method="get">
-        <a href="#" onclick="sorttable(0)">Branch</a>
-        <a href="#" onclick="sorttable(2)">Type</a>
-        <a href="#" onclick="sorttable(3)">Reg.date</a>
-        <a href="#" onclick="sorttable(4)">Status</a>
-        <a href="#" onclick="sorttable(5)"></a>
-    <select name="branch" id="branch" >
-    <option value="none">None</option>
-    <option value="cse">Cse</option>
-    <option value="ece">Ece</option>
-    <option value="eee">Eee</option>
-    <option value="civil">Civil</option>
-    <option value="mech">Mechanical</option>
-    <option value="mme">Mme</option>
-    <option value="chemical">Chemical</option>
-    <option value="biotech">Biotech</option>
-  </select>
-  </form>
+        
+        <a href="{% url 'all_complaints_view'%}?branch=cse" >CSE</a>
+        <a href="{% url 'all_complaints_view'%}?branch=eee" >eee</a>
+        <a href="{% url 'all_complaints_view'%}?branch=ece" >ece</a>
+        <a href="{% url 'all_complaints_view'%}?branch=mech" >mech</a>
+        <a href="{% url 'all_complaints_view'%}?branch=mme" >mme</a>
+        <a href="{% url 'all_complaints_view'%}?branch=chemical" >chemical</a>
+        <a href="{% url 'all_complaints_view'%}?branch=biotech" >biotech</a>
+        <a href="{% url 'all_complaints_view'%}?branch=civil" >civil</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Filter By Status</button>
+      <div class="dropdown-content">
+        
+        <a href="{% url 'all_complaints_view'%}?status=reported" >reported</a>
+        <a href="{% url 'all_complaints_view'%}?status=in_progress" >in progress</a>
+        <a href="{% url 'all_complaints_view'%}?status=completed" >completed</a>
+        <a href="{% url 'all_complaints_view'%}?status=closed" >closed</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Filter By Category</button>
+      <div class="dropdown-content">
+        
+        <a href="{% url 'all_complaints_view'%}?category=academic" >academic</a>
+        <a href="{% url 'all_complaints_view'%}?category=mess" >mess</a>
+        <a href="{% url 'all_complaints_view'%}?category=sports" >sports</a>
+        <a href="{% url 'all_complaints_view'%}?category=student_affairs" >student affairs</a>
+        <a href="{% url 'all_complaints_view'%}?category=hostel" >hostel</a>
+        <a href="{% url 'all_complaints_view'%}?category=security" >security</a>
+        <a href="{% url 'all_complaints_view'%}?category=guest_house" >guest house</a>
+        <a href="{% url 'all_complaints_view'%}?category=library" >library</a>
       </div>
     </div>
   </div>

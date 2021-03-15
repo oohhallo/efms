@@ -54,10 +54,13 @@ def user_view_complaints(request):
 @login_required(login_url='login')
 def all_complaints_view(request):
     complaints = Complaint.objects.filter().order_by('-created_date')
+    print(request.GET)
     
-    filter_by = request.GET.get('category')
-    if filter_by in [i[0] for i in CATEGORY_CHOICES]:
-        complaints=complaints.filter(category=filter_by)
+    category = request.GET.get('category')
+    print(category)
+    if category in [i[0] for i in CATEGORY_CHOICES]:
+        complaints=complaints.filter(category=category)
+       
 
     branch = request.GET.get('branch')
     if branch in [i[0] for i in BRANCH_CHOICES]:
