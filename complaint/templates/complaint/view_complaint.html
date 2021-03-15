@@ -38,7 +38,7 @@
 			if there is a image place it
 		-->
 		{% if complaint.photo %}
-			<img width="100%" src="{{ complaint.photo.url }}">
+			<img  height="50%"src="{{ complaint.photo.url }}">
 		{% endif %}
 		{% for remark in remarks %}
 			<label id="label_view" for="remarks">Remarks:</label><br>
@@ -61,9 +61,9 @@
 			{{ status.1 }}</option>
 			{% endfor %}
 		</select><br><br/>
-		<label id="label_view" for="remarks">Remarks:</label><br>
-		<textarea id="ta" cols="50" rows="6" name=remark></textarea>
-		<button class="update-button" type="submit" style="width: 290.84; height :54 ;" value="submit">Update</button>
+		<div class="update_button">
+		<button class="update-button" type="submit" style="width: auto;" value="submit">Update</button>
+		</div>
 	</form>
 {% endif %}
 <!--

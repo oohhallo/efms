@@ -97,7 +97,8 @@ def view_complaint_byid(request, id):
         # email_content += remark + '\nclick the following link to view you complaint in cts' + complaint_url
         # email_recipient = complaint.author.email
         # send_mail(email_subject, email_content, EMAIL_HOST_USER, [email_recipient], fail_silently=False)
-        Remark.objects.create(text=comment, complaint=complaint,
+        if comment is not None:
+            Remark.objects.create(text=comment, complaint=complaint,
                                author=request.user)
         
 
@@ -125,7 +126,7 @@ def login_view(request):
             if is_admin =='on' or user.profile.is_admin:
                 if user.profile.is_admin:
                     login(request,user)
-                    return HttpResponseRedirect(reverse('admin_complaints_view'))
+                    return HttpResponseRedirect(reverse('all_complaints_view'))
                 else:
                     return render(request, 'complaint/login.html', {'not_admin': True}) 
             

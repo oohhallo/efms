@@ -33,14 +33,26 @@
       />
       {% endif %}
     <div class="dropdown">
-      <button class="dropbtn">Sort By</button>
+      <button class="dropbtn">Filter By</button>
       <div class="dropdown-content">
-        <a href="#" onclick="sorttable(0)">ID</a>
-        <a href="#" onclick="sorttable(1)">Info</a>
+        <form action="" method="get">
+        <a href="#" onclick="sorttable(0)">Branch</a>
         <a href="#" onclick="sorttable(2)">Type</a>
         <a href="#" onclick="sorttable(3)">Reg.date</a>
         <a href="#" onclick="sorttable(4)">Status</a>
         <a href="#" onclick="sorttable(5)"></a>
+    <select name="branch" id="branch" >
+    <option value="none">None</option>
+    <option value="cse">Cse</option>
+    <option value="ece">Ece</option>
+    <option value="eee">Eee</option>
+    <option value="civil">Civil</option>
+    <option value="mech">Mechanical</option>
+    <option value="mme">Mme</option>
+    <option value="chemical">Chemical</option>
+    <option value="biotech">Biotech</option>
+  </select>
+  </form>
       </div>
     </div>
   </div>
@@ -95,9 +107,9 @@
       </form>
 
 
-<button onclick="copyTextToClipboard(this)" value="{% url 'view_complaint' complaint.id %}" onmouseout="outFunc()">
-  <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
-  <i class="bi bi-share"></i>
+<button onclick="copyTextToClipboard(this)" value="{% url 'view_complaint' complaint.id %}" onmouseout="outFunc(this)">
+  <span class="tooltiptext" >Copy to clipboard</span>
+  <i class="bi bi-share" style="font-size: 1.3em;"></i>
   </button>
 
       
@@ -181,13 +193,13 @@ function copyTextToClipboard(x) {
     console.log('Oops, unable to copy');
   }
   document.body.removeChild(textArea);
-   var tooltip = document.getElementById("myTooltip");
+   var tooltip = x.querySelector(".tooltiptext");
   tooltip.innerHTML = "Successfully Copied"  ;
 
 }
 
-function outFunc() {
-  var tooltip = document.getElementById("myTooltip");
+function outFunc(x) {
+  var tooltip = x.querySelector(".tooltiptext");
   tooltip.innerHTML = "Copy to clipboard";
 }
 
