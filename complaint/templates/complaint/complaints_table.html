@@ -100,7 +100,7 @@
       </form>
 
 
-<button onclick="copyTextToClipboard(this)" value="{% url 'view_complaint' complaint.id %}" onmouseout="outFunc(this)">
+<button class="share_button" onclick="copyTextToClipboard(this)" value="{% url 'view_complaint' complaint.id %}" onmouseout="outFunc(this)">
   <span class="tooltiptext" >Copy to clipboard</span>
   <i class="bi bi-share" style="font-size: 1.3em;"></i>
   </button>

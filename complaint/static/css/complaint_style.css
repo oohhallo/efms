@@ -126,7 +126,7 @@
   border-color: #555 transparent transparent transparent;
 }
 
-.complaint_likes:hover .tooltiptext {
+.share_button:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
 }
